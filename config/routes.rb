@@ -20,6 +20,8 @@ Asnote::Application.routes.draw do
   get "sign_up"=>"users#new", as: "sign_up"
 
   get "welcome/about"=>"welcome#about"
+  get "welcome/contact"=>"welcome#contact"
+  get "welcome/contributor"=>"welcome#contributor"
   root to: 'welcome#index'
                                                                                                          
   # The priority is based upon order of creation:
