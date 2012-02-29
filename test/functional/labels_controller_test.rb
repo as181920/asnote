@@ -5,10 +5,10 @@ require 'test_helper'
 class LabelsControllerTest < ActionController::TestCase
   setup do
     Note.drop
-    note_attr={name: "note1", comment: "note1 for test"}
-    label_attr={name: "label1", comment: "label1 of note1 for test"}
-    @note_id = Note.create_one(note_attr)[:objid].to_s
-    @label_id = Note.create_one_label(@note_id,label_attr)[:lid].to_s
+    @note_attr={name: "note1", comment: "note1 for test"}
+    @label_attr={name: "label1", comment: "label1 of note1 for test"}
+    @note_id = Note.create_one(@note_attr)[:objid].to_s
+    @label_id = Note.create_one_label(@note_id,@label_attr)[:lid].to_s
   end
 
   teardown do
@@ -32,6 +32,7 @@ class LabelsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:note)
     assert_not_equal assigns(:note), Mongo::Cursor
     assert_not_nil assigns(:label)
+    assert_equal @label_attr[:name], assigns(:label)["name"]
   end
 
   test "should get show of label info" do
@@ -40,6 +41,7 @@ class LabelsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:note)
     assert_not_equal assigns(:note), Mongo::Cursor
     assert_not_nil assigns(:label)
+    assert_equal @label_attr[:name], assigns(:label)["name"]
   end
 
   test "create new label and update and delete" do

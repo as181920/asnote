@@ -21,10 +21,7 @@ class LabelsController < ApplicationController
 
   def edit
     @note = Note.find_one({_id: BSON::ObjectId(params[:note_id])})
-    #TODO: improve the performance
-    @label = @note["labels"].each do |label|
-      label if label[:lid] == BSON::ObjectId(params[:id])
-    end
+    @label = @note["labels"].find{|label| label["lid"]==BSON::ObjectId(params[:id]) }
   end
 
   def update
@@ -39,10 +36,7 @@ class LabelsController < ApplicationController
 
   def show
     @note = Note.find_one({_id: BSON::ObjectId(params[:note_id])})
-    #TODO: improve the performance
-    @label = @note["labels"].each do |label|
-      label if label["lid"] == BSON::ObjectId(params[:id])
-    end
+    @label = @note["labels"].find{|label| label["lid"]==BSON::ObjectId(params[:id]) }
   end
 
   def destroy
