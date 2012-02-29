@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require "mongo_helper"
 
 User = NoteDB.collection "users"
 

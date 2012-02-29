@@ -17,6 +17,8 @@ class NotesControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_not_nil assigns(:notes)
+    assert_not_nil assigns(:cnt_pages)
+    #TODO: test pagination
   end
 
   test "should get new" do

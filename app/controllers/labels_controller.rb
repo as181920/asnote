@@ -21,7 +21,8 @@ class LabelsController < ApplicationController
 
   def edit
     @note = Note.find_one({_id: BSON::ObjectId(params[:note_id])})
-    @label = @note["labels"].find{|label| label["lid"]==BSON::ObjectId(params[:id]) }
+    @label_id = params[:id]
+    @label = @note["labels"].find{|label| label["lid"]==BSON::ObjectId(@label_id) }
   end
 
   def update

@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.find
+    @users = User.find.page(params[:page].to_i)
+    @cnt_pages=(User.find.count.to_f / 10).ceil
   end
 
   def new

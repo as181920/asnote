@@ -31,6 +31,7 @@ class LabelsControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:note)
     assert_not_equal assigns(:note), Mongo::Cursor
+    assert_not_nil assigns(:label_id)
     assert_not_nil assigns(:label)
     assert_equal @label_attr[:name], assigns(:label)["name"]
   end
@@ -57,6 +58,7 @@ class LabelsControllerTest < ActionController::TestCase
     #TODO: label_new_db = Note.findxxx
     #TODO: assert_equal label_new[:label][:name], label_new_db[:label][:name]
     #TODO: assert_equal label_new[:label][:comment], label_new_db[:label][:comment]
+    #TODO: test update
     assert_equal "label successfully updated!", flash[:notice]
 
     assert_difference('Note.find_one({_id: BSON::ObjectId(@note_id)})["labels"].count', -1) do

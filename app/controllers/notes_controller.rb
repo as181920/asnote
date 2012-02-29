@@ -1,6 +1,7 @@
 class NotesController < ApplicationController
   def index
-    @notes = Note.find
+    @notes = Note.find.page(params[:page].to_i)
+    @cnt_pages=(Note.find.count.to_f / 10).ceil
   end
 
   def new

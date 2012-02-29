@@ -24,6 +24,8 @@ class RecordsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:note)
     assert_not_equal assigns(:note), Mongo::Cursor
     assert_not_nil assigns(:records)
+    assert_not_nil assigns(:cnt_pages)
+    #TODO: test pagination
   end
 
   test "should get new" do
