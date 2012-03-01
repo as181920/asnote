@@ -20,6 +20,31 @@ def User.authenticate(email,submitted_password)
   (user && user["encrypted_password"] == BCrypt::Engine.hash_secret(submitted_password,user["salt"])) ? user : nil
 end
 
+def User.add_followed_note(user_id, note_id)
+  #TODO: 验证关注的表是否重复，不存在等异常情况
+  User.update({_id: BSON::ObjectId(user_id)}, {'$addToSet' => {fnotes: BSON::ObjectId(note_id)}})
+end
+
+def User.followed_note?(user_id, note_id)
+  User.find_one({_id: BSON::ObjectId(user_id)},{fields: {fnotes: 1, _id: 0}})["fnotes"].include? BSON::ObjectId(note_id)
+end
+
+def User.del_followed_note(user_id, note_id)
+  User.update({_id: BSON::ObjectId(user_id)}, {'$pull' => {fnotes: BSON::ObjectId(note_id)}})
+end
+
+def User.add_followed_user(user_id, fuser_id)
+  User.update({_id: BSON::ObjectId(user_id)}, {'$addToSet' => {fusers: BSON::ObjectId(fuser_id)}})
+end
+
+def User.followed_user?(user_id, fuser_id)
+  User.find_one({_id: BSON::ObjectId(user_id)},{fields: {fusers: 1, _id: 0}})["fusers"].include? BSON::ObjectId(fuser_id)
+end
+
+def User.del_followed_user(user_id, fuser_id)
+  User.update({_id: BSON::ObjectId(user_id)}, {'$pull' => {fusers: BSON::ObjectId(fuser_id)}})
+end
+
 private
 def validate_signup_user(user)
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

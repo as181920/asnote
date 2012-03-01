@@ -56,5 +56,15 @@ class UserTest < ActiveSupport::TestCase
     assert false, "essential fields should be filled when update"
   end
 
+  test "follow one note and check if followed and delete the followship" do
+    password_test = "password.1"
+    user1_attr = {email: "t_user1@test.com", password: password_test, password_confirmation: password_test}
+    assert user_id = User.create_one(user1_attr)[:objid].to_s
+    note_attr={name: "note1", comment: "note1 for test"}
+    assert note_id = Note.create_one(note_attr)[:objid].to_s
+    assert User.add_followed_note(user_id, note_id)
+    assert_equal [BSON::ObjectId(note_id)], User.find_one({_id: BSON::ObjectId(user_id)})["fnotes"]
+  end
+
 end
 

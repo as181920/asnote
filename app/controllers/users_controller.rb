@@ -30,5 +30,25 @@ class UsersController < ApplicationController
 
   def show
   end
+
+  def follow_note
+    User.add_followed_note(current_user, params[:note_id])
+    redirect_to :back
+  end
+
+  def unfollow_note
+    User.del_followed_note(current_user, params[:note_id])
+    redirect_to :back
+  end
+
+  def follow_user
+    User.add_followed_note(current_user, params[:user_id])
+    redirect_to :back
+  end
+
+  def unfollow_user
+    User.del_followed_user(current_user, params[:user_id])
+    redirect_to :back
+  end
 end
 
