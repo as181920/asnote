@@ -19,9 +19,11 @@
         <% if current_user %>
           <%= current_user_email %><BR/>
           <div class="usermenu">
+            <%= link_to "Setting", edit_user_path(current_user) %> |
+            <%= link_to "Logout", logout_path %>
           </div>
         <% else %>
-          <%= link_to "Log in", login_path %> |
+          <%= link_to "Login", login_path %> |
           <%= link_to "Sign up", sign_up_path %> <BR/>
         <% end %>
       </div>
