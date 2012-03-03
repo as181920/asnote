@@ -1,9 +1,9 @@
 <%= form_tag "/users" do %>
   <%= label_tag("user[email]", "email") %> <%= text_field_tag("user[email]","") %>
   <br/>
-  <%= label_tag("user[password]", "password") %> <%= text_field_tag("user[password]", "") %>
+  <%= label_tag("user[password]", "password") %> <%= password_field_tag("user[password]", "") %>
   <br/>
-  <%= label_tag("user[password_confirmation]", "password_confirmation") %> <%= text_field_tag("user[password_confirmation]", "") %>
+  <%= label_tag("user[password_confirmation]", "password_confirmation") %> <%= password_field_tag("user[password_confirmation]", "") %>
   <br/>
   <%= submit_tag("new") %>
 <% end %>

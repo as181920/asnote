@@ -16,12 +16,18 @@
       </div>
 
       <div id="user">
-        here is user
+        <% if current_user %>
+          <%= current_user_email %><BR/>
+          <div class="usermenu">
+          </div>
+        <% else %>
+          <%= link_to "Log in", login_path %> |
+          <%= link_to "Sign up", sign_up_path %> <BR/>
+        <% end %>
       </div>
     </div>
 
     <div id="message_box">
-      here is message box
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, id: "flash#{name}" %>
       <% end %>
