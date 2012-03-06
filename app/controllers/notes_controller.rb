@@ -1,5 +1,6 @@
 class NotesController < ApplicationController
-  before_filter :if_login, except: [:index, :show]
+  before_filter :if_login, only: [:new, :create]
+  before_filter :if_owner, only: [:edit, :update, :destroy]
 
   def index
     @notes = Note.find.page(params[:page].to_i)
