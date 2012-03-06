@@ -16,5 +16,10 @@ class ApplicationController < ActionController::Base
     user = User.find_one(_id: session[:user_id]) if session[:user_id]
     user["_id"].to_s if user
   end
+
+  def if_login
+    session[:original_url] = request.url
+    redirect_to login_path, notice: "need login." unless current_user
+  end
 end
 

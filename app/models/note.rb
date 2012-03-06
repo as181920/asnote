@@ -3,11 +3,12 @@ require "mongo_helper"
 
 Note = NoteDB.collection "notes"
 
-def Note.create_one(note)
+def Note.create_one(note, user)
   val = validate_create_note(note); return val unless val[:objid]
 
   note[:created_at] = note[:updated_at] = Time.now
   nid = Note.insert(note)
+  Note.update({_id: nid}, {'$addToSet'=>{owners: BSON::ObjectId(user)}})
   return {objid: nid, message: "note successfully created!"}
 end
 

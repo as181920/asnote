@@ -1,4 +1,6 @@
 class NotesController < ApplicationController
+  before_filter :if_login, except: [:index, :show]
+
   def index
     @notes = Note.find.page(params[:page].to_i)
     @cnt_pages=(Note.find.count.to_f / 10).ceil
@@ -8,7 +10,7 @@ class NotesController < ApplicationController
   end
 
   def create
-    note = Note.create_one(params[:note])
+    note = Note.create_one(params[:note], current_user)
     if note[:objid]
       redirect_to notes_path, notice: note[:message]
     else
