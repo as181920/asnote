@@ -1,3 +1,10 @@
+<div class="header_menu">
+  <% if current_user %>
+    <%= link_to "个人空间", home_user_path(current_user) %>
+  <% end %>
+</div>
+
+
 <BR/>
 <h2>欢迎使用Note记录平台，记录维护您任意类型的信息。</h2>
 <BR/>

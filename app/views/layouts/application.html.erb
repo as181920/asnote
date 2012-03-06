@@ -17,8 +17,8 @@
 
       <div id="user">
         <% if current_user %>
-          <%= current_user_email %><BR/>
-          <div class="usermenu">
+          <%= link_to current_user_email, home_user_path(current_user) %><BR/>
+          <div class="user_menu">
             <%= link_to "Setting", edit_user_path(current_user) %> |
             <%= link_to "Logout", logout_path %>
           </div>

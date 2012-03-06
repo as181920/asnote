@@ -1,2 +1,11 @@
 
-home page
+<br/>
+<b>home page:</b>
+<br/>
+My notes list:
+<ol>
+  <% @notes.each do |note| %>
+    <li><%= note["name"] %>(<%= note["_id"] %>)</li>
+  <% end %>
+</ol>
+
