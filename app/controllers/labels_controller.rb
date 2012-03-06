@@ -1,11 +1,13 @@
 class LabelsController < ApplicationController
   def index
-    @note = Note.find_one({_id: BSON::ObjectId(params[:note_id])})
+    @note_id = params[:note_id]
+    @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
     @labels = @note["labels"]
   end
 
   def new
     @note_id = params[:note_id]
+    @note_name = Note.find_one({_id: BSON::ObjectId(@note_id)})["name"]
   end
 
   def create

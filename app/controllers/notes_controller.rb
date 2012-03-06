@@ -13,7 +13,7 @@ class NotesController < ApplicationController
   def create
     note = Note.create_one(params[:note], current_user)
     if note[:objid]
-      redirect_to notes_path, notice: note[:message]
+      redirect_to home_user_path(current_user), notice: note[:message]
     else
       flash[:error] = note[:message]
       redirect_to new_note_path

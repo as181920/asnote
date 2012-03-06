@@ -5,7 +5,7 @@
 My notes list:
 <ol>
   <% @notes.each do |note| %>
-    <li><%= note["name"] %>(<%= note["_id"] %>)</li>
+    <li><%= link_to note["name"], note_records_path(note["_id"]) %>(<%= note["_id"] %>)</li>
   <% end %>
 </ol>
 

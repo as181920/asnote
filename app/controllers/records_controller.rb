@@ -1,5 +1,11 @@
 class RecordsController < ApplicationController
   def index
+    unless Note.find_one({_id: BSON::ObjectId(params[:note_id])}, {fields: {labels: 1, _id: 0}})["labels"]
+      flash[:error] = "should add labels and then add record!"
+      redirect_to new_note_label_path(params[:note_id])
+      return true
+    end
+
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
     @records = Record.find({nid: BSON::ObjectId(@note_id)}).page(params[:page].to_i)

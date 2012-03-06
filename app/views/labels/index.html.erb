@@ -1,11 +1,18 @@
+<div class="header_menu">
+  <%= link_to "Public_Notes", notes_path %>
+  <% if current_user %>
+    <%= link_to "New_Label", new_note_label_path(@note_id) %>
+  <% end %>
+</div>
 
-<%= debug(@note) %>
+<br/>
+<b><%= link_to @note["name"], note_records_path(@note_id) %>: </b>
 <br/>
 <br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<%= debug(@labels) %>
+Labels list:
+<ol>
+  <% @labels.each do |label| %>
+    <li><%= link_to label["name"], note_label_path(@note_id, label["lid"]) %>(<%= label["format"] %>)(edit/destroy)</li>
+  <% end %>
+</ol>
+

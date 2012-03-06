@@ -1,6 +1,15 @@
+<b><%= link_to @note_name, note_records_path(@note_id) %>: </b>
+<br/>
+<br/>
 <%= form_tag note_labels_path(@note_id) do %>
   <%= label_tag("label[name]", "label") %>
   <%= text_field_tag("label[name]","") %>
+  <br/>
 
+  <%= label_tag("label[format]", "format") %>
+  <%= select_tag("label[format]", options_for_select(["","String","Text","RichText","Date","Time","Numeric","Select","MultiSelect"])) %>
+  <br/>
+
+  <br/>
   <%= submit_tag("Add") %>
 <% end %>
