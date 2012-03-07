@@ -1,14 +1,29 @@
+<div class="header_menu">
+  <%= link_to "Public_Notes", notes_path %>
+  <% if current_user %>
+    <%= link_to "New_Record", new_note_record_path(@note_id) %>
+  <% end %>
+</div>
 
-record index page
-<%= debug(@note_id) %>
 <br/>
-<%= debug(@note) %>
+<b><%= link_to @note["name"], note_records_path(@note_id) %>---Records: </b>
 <br/>
-<%= debug(@records) %>
 <br/>
+<table class="records">
+  <tr>
+    <th>ID</th>
+    <% @note["labels"].each do |label| %>
+      <th><%= label["name"] %></th>
+    <% end %>
+  </tr>
 
-<ul>
-<% @records.each do |record| %>
-  <li> <%= debug(record) %> </li>
-<% end %>
-</ul>
+  <% @records.each do |record| %>
+    <tr>
+      <td><%= record["_id"] %></td>
+      <% @note["labels"].each do |label| %>
+        <td><%= record[label["lid"].to_s] %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+

@@ -2,6 +2,7 @@
   <% @note["labels"].each do |label| %>
     <%= label_tag("record[#{label['lid']}]", label['name']) %> 
     <%= text_field_tag("record[#{label['lid']}]", "") %>
+    <br/>
   <% end %>
 
   <%= submit_tag("Add") %>

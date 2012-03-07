@@ -105,6 +105,23 @@ button {
   height: 600px;
 }
 
+.records {
+  border-collapse: collapse;
+}
+.records tr {
+  width: 100%;
+}
+.records th {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+.records td {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+}
+
 .recommend {
   width: 100%;
   height: 80px;

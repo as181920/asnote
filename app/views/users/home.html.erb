@@ -1,3 +1,10 @@
+<div class="header_menu">
+  <%= link_to "Public_Notes", notes_path %>
+  <% if current_user %>
+    <%= link_to "New_Note", new_note_path %>
+  <% end %>
+</div>
+
 
 <br/>
 <b>home page:</b>
