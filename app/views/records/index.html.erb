@@ -22,7 +22,7 @@
     <tr>
       <td><%= record["_id"] %></td>
       <% @note_labels.each do |label| %>
-        <td><%= record[label["lid"].to_s] %></td>
+        <td><pre><%= record[label["lid"].to_s] %></pre></td>
       <% end %>
     </tr>
   <% end %>

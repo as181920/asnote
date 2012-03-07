@@ -41,6 +41,7 @@ end
 
 def Note.delete_one_label(note_id,label_id)
   #TODO: delete releated data (note_info,records)
+  #TODO: 调整label后面的pos值（-1）
   Note.update({_id: BSON::ObjectId(note_id)}, {'$pull'=>{labels: {lid: BSON::ObjectId(label_id)}}})
 end
 

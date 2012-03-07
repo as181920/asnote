@@ -1,7 +1,7 @@
 <%= form_tag note_records_path(@note_id) do %>
   <% @labels.each do |label| %>
     <%= label_tag("record[#{label['lid']}]", label['name']) %> 
-    <%= text_field_tag("record[#{label['lid']}]", "") %>
+    <%= text_area_tag("record[#{label['lid']}]", "") %>
     <br/>
   <% end %>
 
