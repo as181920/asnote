@@ -24,6 +24,8 @@ def Note.create_one_label(note_id, label)
   val = validate_create_note_label(label); return val unless val[:lid]
 
   label[:lid] = BSON::ObjectId.new
+  # position的赋值是否有更好的实现方法？
+  label[:pos] = Note.find_one(_id: BSON::ObjectId(note_id))["labels"].to_a.length + 1
   label[:created_at] = label[:updated_at] = Time.now
   Note.update({_id: BSON::ObjectId(note_id)}, {'$addToSet'=>{labels: label}})
   return {lid: label[:lid], message: "label successfully created!"}

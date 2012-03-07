@@ -122,6 +122,10 @@ button {
   border-width: 1px;
 }
 
+.up_down {
+  display: inline;
+}
+
 .recommend {
   width: 100%;
   height: 80px;

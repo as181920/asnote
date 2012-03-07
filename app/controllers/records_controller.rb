@@ -8,13 +8,14 @@ class RecordsController < ApplicationController
 
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
+    @note_labels = @note["labels"].sort_by {|l| l["pos"] }
     @records = Record.find({nid: BSON::ObjectId(@note_id)}).page(params[:page].to_i)
     @cnt_pages=(Record.find({nid: BSON::ObjectId(@note_id)}).count.to_f / 10).ceil
   end
 
   def new
     @note_id = params[:note_id]
-    @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
+    @labels = Note.find_one({_id: BSON::ObjectId(@note_id)})["labels"].sort_by {|l| l["pos"] }
   end
 
   def create

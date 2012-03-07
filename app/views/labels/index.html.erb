@@ -10,9 +10,24 @@
 <br/>
 <br/>
 Labels list:
-<ol>
-  <% @labels.each do |label| %>
-    <li><%= link_to label["name"], note_label_path(@note_id, label["lid"]) %>(<%= label["format"] %>)(edit/destroy)</li>
+<ol id="labels_list">
+  <% @labels.each_with_index do |label, i| %>
+    <li>
+      <%= link_to label["name"], note_label_path(@note_id, label["lid"]) %>(<%= label["format"] %>)(edit/destroy)
+      <div class="up_down">
+        <% ["up","down"].each do |mv| %>
+          <% if (mv=="up" and i==0) or (mv=="down" and i==@max_pos-1) %>
+          <% else %>
+            <%= form_tag sort_note_labels_path(@note_id) do %>
+              <%= hidden_field("label", "lid", :value=>label["lid"]) %>
+              <%= hidden_field("label", "c_pos", :value=>i) %>
+              <%= hidden_field("label", "mv_pos", :value=>mv) %>
+              <%= submit_tag mv %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </li>
   <% end %>
 </ol>
 

@@ -5,7 +5,16 @@ Asnote::Application.routes.draw do
   get "logout"=>"sessions#destroy", as: "logout"
 
   resources :notes do
+    collection do
+      post :sort
+    end
+    member do
+      post :sort_all
+    end
     resources :labels do
+      collection do
+        post :sort
+      end
     end
 
     resources :records do

@@ -2,7 +2,29 @@ class LabelsController < ApplicationController
   def index
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
-    @labels = @note["labels"]
+    @max_pos = ((Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].sort_by {|l| l["pos"]}).last)["pos"] 
+    @labels = @note["labels"].sort_by {|l| l["pos"] }
+  end
+
+  def sort
+    @max_pos = ((Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].sort_by {|l| l["pos"]}).last)["pos"] 
+    case params["label"]["mv_pos"]
+    when "up"
+      if params["label"]["c_pos"].to_i > 0
+        last_label = Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["pos"]==params["label"]["c_pos"].to_i}
+        Note.update({'labels.lid'=>BSON::ObjectId(params["label"]["lid"])}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i}})
+        Note.update({'labels.lid'=>last_label["lid"]}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i+1}})
+      end
+    when "down"
+      if params["label"]["c_pos"].to_i < @max_pos - 1
+        next_label = Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["pos"]==params["label"]["c_pos"].to_i+2}
+        Note.update({'labels.lid'=>BSON::ObjectId(params["label"]["lid"])}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i+2}})
+        Note.update({'labels.lid'=>next_label["lid"]}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i+1}})
+      end
+    else
+    end
+
+    redirect_to :back
   end
 
   def new
