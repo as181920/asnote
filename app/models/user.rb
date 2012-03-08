@@ -26,7 +26,7 @@ def User.add_followed_note(user_id, note_id)
 end
 
 def User.followed_note?(user_id, note_id)
-  User.find_one({_id: BSON::ObjectId(user_id)},{fields: {fnotes: 1, _id: 0}})["fnotes"].include? BSON::ObjectId(note_id)
+  User.find_one({_id: BSON::ObjectId(user_id)},{fields: {fnotes: 1, _id: 0}})["fnotes"].to_a.include? BSON::ObjectId(note_id)
 end
 
 def User.del_followed_note(user_id, note_id)
@@ -38,7 +38,7 @@ def User.add_followed_user(user_id, fuser_id)
 end
 
 def User.followed_user?(user_id, fuser_id)
-  User.find_one({_id: BSON::ObjectId(user_id)},{fields: {fusers: 1, _id: 0}})["fusers"].include? BSON::ObjectId(fuser_id)
+  User.find_one({_id: BSON::ObjectId(user_id)},{fields: {fusers: 1, _id: 0}})["fusers"].to_a.include? BSON::ObjectId(fuser_id)
 end
 
 def User.del_followed_user(user_id, fuser_id)

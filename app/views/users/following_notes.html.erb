@@ -1,0 +1,11 @@
+Notes list:
+<ol>
+  <% @notes.each do |note| %>
+    <li><%= link_to note["name"], note_records_path(note["_id"]) %>(<%= note["_id"] %>)</li>
+    <%= form_tag unfollow_note_user_path(current_user) do %>
+      <%= hidden_field_tag("follow_note", note["_id"]) %>
+      <%= submit_tag "unfollow" %>
+    <% end %>
+  <% end %>
+</ol>
+

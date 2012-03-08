@@ -1,0 +1,11 @@
+Users list:
+<ol>
+  <% @users.each do |user| %>
+    <li><%= link_to user["email"], user_path(user["_id"]) %>(<%= user["_id"] %>)</li>
+    <%= form_tag unfollow_user_path(current_user) do %>
+      <%= hidden_field_tag("follow_user", user["_id"]) %>
+      <%= submit_tag "unfollow" %>
+    <% end %>
+  <% end %>
+</ol>
+

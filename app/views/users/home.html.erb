@@ -2,6 +2,8 @@
   <%= link_to "Public_Notes", notes_path %>
   <% if current_user %>
     <%= link_to "New_Note", new_note_path %>
+    <%= link_to "Followed_notes", following_notes_user_path(current_user) %>
+    <%= link_to "Followed_users", following_user_path(current_user) %>
   <% end %>
 </div>
 

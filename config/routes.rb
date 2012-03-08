@@ -24,10 +24,12 @@ Asnote::Application.routes.draw do
   resources :users do
     member do
       get :home
+      get :following
+      get :following_notes
+      post :follow
+      post :unfollow
       post :follow_note
-      post :follow_user
-      delete :unfollow_note
-      delete :unfollow_user
+      post :unfollow_note
     end
   end
   get "sign_up"=>"users#new", as: "sign_up"

@@ -34,23 +34,35 @@ class UsersController < ApplicationController
   end
 
   def follow_note
-    User.add_followed_note(current_user, params[:note_id])
+    User.add_followed_note(current_user, params[:follow_note])
     redirect_to :back
   end
 
   def unfollow_note
-    User.del_followed_note(current_user, params[:note_id])
+    User.del_followed_note(current_user, params[:follow_note])
     redirect_to :back
   end
 
-  def follow_user
-    User.add_followed_note(current_user, params[:user_id])
+  def following_notes
+    @notes = []
+    User.find_one(_id: BSON::ObjectId(params[:id]))["fnotes"].each {|id| @notes << Note.find_one(_id: id)}
+  end
+
+  def follow
+    User.add_followed_user(current_user, params[:follow_user])
     redirect_to :back
   end
 
-  def unfollow_user
-    User.del_followed_user(current_user, params[:user_id])
+  def unfollow
+    User.del_followed_user(current_user, params[:follow_user])
     redirect_to :back
+  end
+
+  def following
+    @users = []
+    User.find_one(_id: BSON::ObjectId(params[:id]))["fusers"].each {|id| @users << User.find_one(_id: id)}
+    #@user_ids = User.find_one(_id: BSON::ObjectId(params[:id]))["fusers"]
+    #@user_ids.each {|id| @users << User.find_one(_id: id)}
   end
 end
 

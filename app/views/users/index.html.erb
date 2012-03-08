@@ -1,7 +1,22 @@
 Users list:
 <ol>
   <% @users.each do |user| %>
-    <li><%= user["email"] %></li>
+    <li><%= link_to user["email"], user_path(user["_id"]) %>(<%= user["_id"] %>)</li>
+    <div class="follow">
+      <% if current_user %>
+        <% if User.followed_user?(current_user, user["_id"].to_s) %>
+          <%= form_tag unfollow_user_path(current_user) do %>
+            <%= hidden_field_tag("follow_user", user["_id"]) %>
+            <%= submit_tag "unfollow" %>
+          <% end %>
+        <% else %>
+          <%= form_tag follow_user_path(current_user) do %>
+            <%= hidden_field_tag("follow_user", user["_id"]) %>
+            <%= submit_tag "follow" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
 </ol>
 

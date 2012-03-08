@@ -2,6 +2,23 @@ Notes list:
 <ol>
   <% @notes.each do |note| %>
     <li><%= link_to note["name"], note_records_path(note["_id"]) %>(<%= note["_id"] %>)</li>
+    <div class="follow">
+      <% if current_user %>
+ 
+        <% if User.followed_note?(current_user, note["_id"].to_s) %>
+          <%= form_tag unfollow_note_user_path(current_user) do %>
+            <%= hidden_field_tag("follow_note", note["_id"]) %>
+            <%= submit_tag "unfollow" %>
+          <% end %>
+        <% else %>
+          <%= form_tag follow_note_user_path(current_user) do %>
+            <%= hidden_field_tag("follow_note", note["_id"]) %>
+            <%= submit_tag "follow" %>
+          <% end %>
+        <% end %>
+ 
+      <% end %>
+    </div>
   <% end %>
 </ol>
 
