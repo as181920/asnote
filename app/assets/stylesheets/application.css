@@ -35,7 +35,11 @@ button {
 #header {
   border-radius: 7px;
   margin: 3px auto;
-  background-color: #D5DBD3;
+  #background-color: #D5DBD3;
+  background-color: transparent;
+  border-style: solid;
+  border-color: #D5DBD3;
+  border-width: 1px;
   height: 30px;
   line-height: 30px;
   vertical-align: middle;
@@ -57,7 +61,11 @@ button {
   text-align: center;
   margin: 3px auto;
   font-size: 13px;
-  background-color: #D5DBD3;
+  #background-color: #D5DBD3;
+  background-color: transparent;
+  border-style: solid;
+  border-color: #D5DBD3;
+  border-width: 1px;
   vertical-align: middle;
 }
 
@@ -101,7 +109,11 @@ button {
   text-align: left;
   #text-indent: 20px;
   font-size: 13px;
-  background-color: #D5DBD3;
+  #background-color: #D5DBD3;
+  background-color: transparent;
+  border-style: solid;
+  border-color: #D5DBD3;
+  border-width: 1px;
   height: 600px;
 }
 
