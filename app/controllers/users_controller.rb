@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
 
   def home
-    @notes = Note.find(owners: BSON::ObjectId(params[:id])).page(params[:page].to_i)
-    @cnt_pages=(Note.find(owners: BSON::ObjectId(params[:id])).count.to_f / 10).ceil
+    #@notes = Note.find(owners: BSON::ObjectId(params[:id])).page(params[:page].to_i)
+    #@cnt_pages=(Note.find(owners: BSON::ObjectId(params[:id])).count.to_f / 10).ceil
+    @notes = Note.find(owners: BSON::ObjectId(params[:id])).sort("name")
   end
 
   def index
