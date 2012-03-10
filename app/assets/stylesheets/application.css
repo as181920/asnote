@@ -26,6 +26,7 @@ button {
 }
 
 #container {
+  position: relative;
   text-align: center;
   margin: auto;
   width: 95%;
@@ -43,6 +44,15 @@ button {
   height: 30px;
   line-height: 30px;
   vertical-align: middle;
+}
+
+.header_menu {
+  display: none;
+  float: left;
+  vertical-align: middle;
+  padding-left: 12px;
+  margin-top: 3px;
+  font-size: 12px;
 }
 
 #header a:link{color: #1B1B1B; text-decoration: none}
@@ -74,9 +84,12 @@ button {
 }
 
 #logo{
+  text-align: left;
+  display: inline;
   vertical-align: middle;
   margin-left: 20px;
   float: left;
+  font-size: 23px;
 }
 
 .menu {
@@ -84,15 +97,19 @@ button {
   float: left;
 }
 
-.header_menu {
-  display: inline;
-  float: left;
-}
-
 #user {
   margin-right: 20px;
   vertical-align: middle;
   float: right;
+  font-size: 12px;
+}
+
+.user_menu {
+  display: none;
+  margin-right: 20px;
+  vertical-align: middle;
+  float: right;
+  font-size: 12px;
 }
 
 #message_box {
@@ -114,24 +131,22 @@ button {
   border-style: solid;
   border-color: #D5DBD3;
   border-width: 1px;
-  height: 600px;
+  height: 95%;
 }
 
-.records {
-  border-collapse: collapse;
-}
-.records tr {
-  width: 100%;
-}
-.records th {
-  border-style: solid;
-  border-color: black;
+#content_top {
+  border-radius: 7px;
+  border-color: #D5DBD3;
   border-width: 1px;
-}
-.records td {
   border-style: solid;
-  border-color: black;
-  border-width: 1px;
+  margin: 6px 20px 20px;
+  height: 17px;
+  font-style: italic;
+  color: blue;
+}
+#content_main {
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .up_down {
@@ -151,4 +166,8 @@ button {
   height: 40px;
   float: left;
   display: block;
+}
+
+form {
+  display: inline;
 }

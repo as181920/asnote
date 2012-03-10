@@ -1,12 +1,3 @@
-<div class="header_menu">
-  <%= link_to "Public_Notes", notes_path %>
-  <% if current_user %>
-    <%= link_to "个人空间", home_user_path(current_user) %>
-    <%= link_to "New_Note", new_note_path %>
-  <% end %>
-</div>
-
-
 <BR/>
 <h2>欢迎使用Note记录平台，记录维护您任意类型的信息。</h2>
 <BR/>
@@ -15,7 +6,7 @@
 <b>推荐表－个人应用</b>
 <div class="recommend">
   <ul>
-    <li><%= link_to "TODO", note_record_path("?", "?") %></li>
+    <li><%= link_to "TODO", note_records_path("4f596f283e37c00ace000001") %></li>
     <li>随笔</li>
     <li>电话簿</li>
     <li>临时信息</li>

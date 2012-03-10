@@ -15,18 +15,13 @@
         <%= link_to 'Note', root_path %>
       </div>
 
-      <div id="user">
-        <% if current_user %>
-          <%= link_to current_user_email, home_user_path(current_user) %><BR/>
-          <div class="user_menu">
-            <%= link_to "Setting", edit_user_path(current_user) %> |
-            <%= link_to "Logout", logout_path %>
-          </div>
-        <% else %>
-          <%= link_to "Login", login_path %> |
-          <%= link_to "Sign up", sign_up_path %> <BR/>
-        <% end %>
+      <div class="header_menu">
+        <%= raw header_menu %>
       </div>
+
+      <div id="user">
+        <%= raw user_menu %>
+     </div>
     </div>
 
     <div id="message_box">
@@ -36,11 +31,11 @@
     </div>
 
     <div id="content">
-      <div id="content_top">
-      </div>
+      <%= raw other_user_notice %>
 
       <div id="content_main">
         <%= yield %>
+        <div id="clear"></div>
       </div>
 
       <div id="content_bottom">

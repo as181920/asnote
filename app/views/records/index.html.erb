@@ -1,30 +1,24 @@
-<div class="header_menu">
-  <%= link_to "Public_Notes", notes_path %>
-  <% if current_user %>
-    <%= link_to "Labels",note_labels_path(@note_id) %>
-    <%= link_to "New_Record", new_note_record_path(@note_id) %>
-  <% end %>
-</div>
-
-<br/>
-<b><%= link_to @note["name"], note_records_path(@note_id) %>---Records: </b>
-<br/>
-<br/>
-<table class="records">
-  <tr>
-    <th>ID</th>
-    <% @note_labels.each do |label| %>
-      <th><%= label["name"] %></th>
-    <% end %>
-  </tr>
-
-  <% @records.each do |record| %>
+<div>
+  <br/>
+  <b><%= link_to @note["name"], note_records_path(@note_id) %>---Records: </b>
+  <br/>
+  <br/>
+  <table class="records">
     <tr>
-      <td><%= record["_id"] %></td>
+      <th>ID</th>
       <% @note_labels.each do |label| %>
-        <td><pre><%= record[label["lid"].to_s] %></pre></td>
+        <th><%= label["name"] %></th>
       <% end %>
     </tr>
-  <% end %>
-</table>
 
+    <% @records.each do |record| %>
+      <tr>
+        <td><%= record["_id"] %></td>
+        <% @note_labels.each do |label| %>
+          <td><pre><%= record[label["lid"].to_s] %></pre></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
