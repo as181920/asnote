@@ -4,7 +4,7 @@
   <%= label_tag("note[comment]", "comment") %> <%= text_area_tag("note[comment]", "") %>
   <br/>
   <%= label_tag("note[permission]", "permission") %>
-  <%= select_tag("note[permission]", options_for_select(["Default","Team","personal","private"])) %>
+  <%= select_tag("note[permission]", options_for_select([["所有人可查看不可编辑","default"],["所有人可查看可编辑","public_team"],["所有人可查看表记录，只可编辑自己的记录","public_tp"],["所有人可查看可编辑自己的记录","public_personal"],["申请为团队用户后可查看可编辑","private_team"],["申请为参与用户后可查看表记录，只可编辑自己的记录","private_tp"],["申请为个人用户后可查看可编辑自己的记录","private_personal"],["仅限表个人查看和使用，私密","private_owner"]])) %>
   <br/>
   <%= submit_tag("new") %>
 <% end %>

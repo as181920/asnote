@@ -10,6 +10,9 @@
   <%= select_tag("label[format]", options_for_select(["","String","Text","RichText","Date","Time","Numeric","Select","MultiSelect"])) %>
   <br/>
 
+  <%= label_tag("label[select]", "select_items(splited by space)") %><BR/>
+  <%= text_area_tag("label[select]", "") %>
+
   <br/>
   <%= submit_tag("Add") %>
 <% end %>

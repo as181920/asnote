@@ -20,6 +20,7 @@
 
 # Ignore other files
 *.jpg
+*.png
 *.ico
 
 nbproject/

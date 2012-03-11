@@ -1,9 +1,3 @@
-<div class="header_menu">
-  <%= link_to "Public_Notes", notes_path %>
-  <% if current_user %>
-    <%= link_to "New_Label", new_note_label_path(@note_id) %>
-  <% end %>
-</div>
 
 <br/>
 <b><%= link_to @note["name"], note_records_path(@note_id) %>: </b>
@@ -13,7 +7,12 @@ Labels list:
 <ol id="labels_list">
   <% @labels.each_with_index do |label, i| %>
     <li>
-      <%= link_to label["name"], note_label_path(@note_id, label["lid"]) %>(<%= label["format"] %>)(edit/destroy)
+      <%= link_to label["name"], note_label_path(@note_id, label["lid"]) %>(<%= label["format"] %>)
+      [
+      <%= link_to "edit", edit_note_label_path(@note_id, label["lid"]) %>
+      |
+      <%= link_to "destroy", note_label_path(@note_id, label["lid"]), :method => :delete %>
+      ]
       <div class="up_down">
         <% ["up","down"].each do |mv| %>
           <% if (mv=="up" and i==0) or (mv=="down" and i==@max_pos-1) %>

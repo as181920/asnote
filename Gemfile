@@ -4,6 +4,7 @@ source 'http://ruby.taobao.org'
 gem 'rails', '3.2.0.rc2'
 
 gem 'jquery-rails'
+gem 'jquery_datepicker'
 
 # add essential gems for mongodb
 gem 'bson'

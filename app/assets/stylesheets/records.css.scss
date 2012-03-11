@@ -3,9 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .records {
+	overflow: hidden; 
+	word-break: normal;
+	word-wrap: break-word;
   border-collapse: collapse;
   width: 98%;
-  table-layout: fixed;
+  #table-layout: fixed;
 }
 .records th {
   border-style: solid;
@@ -16,4 +19,7 @@
   border-style: solid;
   border-color: black;
   border-width: 1px;
+}
+.date_picker {
+  display: inline;
 }

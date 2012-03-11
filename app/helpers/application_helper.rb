@@ -75,6 +75,7 @@ module ApplicationHelper
 
       menu += "<a href=#{note_path(note_id)}>查看表信息</a>"
       menu += "&nbsp;&nbsp;<a href=#{note_records_path(id)}>表数据页</a>"
+      menu += "&nbsp;&nbsp;<a href=#{new_note_label_path(note_id)}>新建列</a>"
     when note_label_path
       note_id = request.path.split("/")[2]
       id=request.path.split("/")[4]
@@ -87,6 +88,7 @@ module ApplicationHelper
       id=request.path.split("/")[4]
 
       menu += "<a href=#{home_user_path(current_user)}>我的表</a>"
+      menu += "&nbsp;&nbsp;<a href=#{note_labels_path(note_id)}>返回表</a>"
     else
     end
     menu

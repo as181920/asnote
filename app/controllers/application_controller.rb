@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
   helper_method :current_user_email
+  #helper_method :check_permission_read?
+  #helper_method :check_permission_write?
+  #helper_method :check_permission_admin?
   private
   def current_user
     @current_user ||= user_from_session
@@ -15,6 +18,30 @@ class ApplicationController < ActionController::Base
   def user_from_session
     user = User.find_one(_id: session[:user_id]) if session[:user_id]
     user["_id"].to_s if user
+  end
+
+  def check_permission_type(note_id)
+    note = Note.find_one({_id: BSON::ObjectId(@note_id)})
+    owners = note["owners"]
+    if current_user
+      if owners.include? BSON::ObjectId(current_user)
+        "owner"
+      else
+        #TODO: 其它权限类型
+        "public_personal"
+      end
+    else
+      "guest"
+    end
+  end
+
+  def check_permission_read?
+  end
+
+  def check_permission_write?
+  end
+
+  def check_permission_admin?
   end
 
   def if_login

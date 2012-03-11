@@ -3,10 +3,11 @@ require "mongo_helper"
 
 Record = NoteDB.collection "records"
 
-def Record.create_one(note_id, record)
+def Record.create_one(note_id, user, record)
   val = validate_save_record(record); return val unless val[:objid]
 
   record[:nid] = BSON::ObjectId(note_id)
+  record[:uid] = BSON::ObjectId(user)
   record[:created_at] = record[:updated_at] = Time.now
   record_id = Record.insert(record)
   return {objid: record_id, message: "record successfully added!"}
