@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
@@ -21,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permission_type(note_id)
-    note = Note.find_one({_id: BSON::ObjectId(@note_id)})
+    note = Note.find_one({_id: BSON::ObjectId(note_id)})
     owners = note["owners"]
     if current_user
       if owners.include? BSON::ObjectId(current_user)
@@ -39,6 +40,25 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permission_write?
+    note_id = params[:note_id]
+    note = Note.find_one({_id: BSON::ObjectId(note_id)})
+    owners = note["owners"]
+    note_permission_type = check_permission_type(note_id)
+    record_id = params[:id]
+    record = Record.find_one({_id: BSON::ObjectId(record_id)})
+    if current_user and owners.include? BSON::ObjectId(current_user)
+      return true
+    else
+      case note_permission_type
+      when "public_team"
+      when "public_tp"
+      when "public_personal"
+        return true if record["uid"].to_s == current_user
+      else
+      end
+    end
+    flash[:error] = "目前没有权限编辑该条数据"
+    redirect_to :back rescue redirect_to note_records_path(note_id)
   end
 
   def check_permission_admin?

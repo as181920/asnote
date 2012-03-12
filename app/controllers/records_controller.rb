@@ -1,6 +1,6 @@
 # encoding=utf-8
 class RecordsController < ApplicationController
-  #before_filter :check_permission_read?, only: [:index]
+  before_filter :check_permission_write?, except: [:index, :show]
 
   def index
     unless Note.find_one({_id: BSON::ObjectId(params[:note_id])}, {fields: {labels: 1, _id: 0}})["labels"]
@@ -18,7 +18,7 @@ class RecordsController < ApplicationController
       @cnt_pages=(Record.find({nid: BSON::ObjectId(@note_id)}).count.to_f / 10).ceil
     when "team_team"
     when "team_personal"
-    when "personal_personal"
+    when "public_personal"
       @records = Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).page(params[:page].to_i)
       @cnt_pages=(Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).count.to_f / 10).ceil
     else

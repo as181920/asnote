@@ -2,6 +2,9 @@
 source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.0.rc2'
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
+
 
 gem 'jquery-rails'
 gem 'jquery_datepicker'
@@ -10,9 +13,6 @@ gem 'jquery_datepicker'
 gem 'bson'
 gem 'bson_ext'
 gem 'mongo'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
 
