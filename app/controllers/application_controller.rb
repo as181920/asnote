@@ -4,9 +4,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
   helper_method :current_user_email
-  #helper_method :check_permission_read?
-  #helper_method :check_permission_write?
-  #helper_method :check_permission_admin?
+  helper_method :if_record_write?
   private
   def current_user
     @current_user ||= user_from_session
@@ -21,47 +19,14 @@ class ApplicationController < ActionController::Base
     user["_id"].to_s if user
   end
 
-  def check_permission_type(note_id)
-    note = Note.find_one({_id: BSON::ObjectId(note_id)})
-    owners = note["owners"]
-    if current_user
-      if owners.include? BSON::ObjectId(current_user)
-        "owner"
-      else
-        #TODO: 其它权限类型
-        "public_personal"
-      end
-    else
-      "guest"
-    end
-  end
-
-  def check_permission_read?
-  end
-
-  def check_permission_write?
-    note_id = params[:note_id]
-    note = Note.find_one({_id: BSON::ObjectId(note_id)})
-    owners = note["owners"]
-    note_permission_type = check_permission_type(note_id)
-    record_id = params[:id]
-    record = Record.find_one({_id: BSON::ObjectId(record_id)})
-    if current_user and owners.include? BSON::ObjectId(current_user)
-      return true
-    else
-      case note_permission_type
-      when "public_team"
-      when "public_tp"
-      when "public_personal"
-        return true if record["uid"].to_s == current_user
-      else
-      end
-    end
-    flash[:error] = "目前没有权限编辑该条数据"
-    redirect_to :back rescue redirect_to note_records_path(note_id)
-  end
-
-  def check_permission_admin?
+  #TODO: 其余note的权限类型
+  def if_record_write?(note_id, id)
+    note = Note.find_one(_id: BSON::ObjectId(note_id))
+    record = Record.find_one(_id: BSON::ObjectId(id))
+    return true if note["permission"] == "public_team"
+    return true if note["owners"].include? BSON::ObjectId(current_user)
+    return true if current_user and record["uid"].to_s == current_user
+    false
   end
 
   def if_login

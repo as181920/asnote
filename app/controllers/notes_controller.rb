@@ -3,7 +3,7 @@ class NotesController < ApplicationController
   before_filter :if_owner, only: [:edit, :update, :destroy]
 
   def index
-    @notes = Note.find.page(params[:page].to_i)
+    @notes = Note.find.sort([["updated_at", "descending"]]).page(params[:page].to_i)
     @cnt_pages=(Note.find.count.to_f / 10).ceil
   end
 

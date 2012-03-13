@@ -12,7 +12,15 @@
 
   <%= label_tag("label[select]", "select_items(splited by space)") %><BR/>
   <%= text_area_tag("label[select]", "") %>
-
   <br/>
+
+  <%= label_tag("label[default]", "default_value") %><BR/>
+  <%= text_area_tag("label[default]", "") %>
+  <br/>
+
+  <%= label_tag("label[owners]", "仅针对以下用户可用：（输入用户id，空格或换行区分）") %><BR/>
+  <%= text_area_tag("label[owners]", "") %>
+  <br/>
+
   <%= submit_tag("Add") %>
 <% end %>

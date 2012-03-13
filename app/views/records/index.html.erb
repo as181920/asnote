@@ -14,9 +14,11 @@
     <% @records.each do |record| %>
       <tr>
         <td>
-          <%= link_to "show", note_record_path(@note_id, record["_id"]) %>|
-          <%= link_to "edit", edit_note_record_path(@note_id, record["_id"]) %>|
-          <%= link_to "destroy", note_record_path(@note_id, record["_id"]), method: "delete" %>
+          <%= link_to "show", note_record_path(@note_id, record["_id"]) %>
+          <% if if_record_write?(@note_id, record["_id"].to_s) %>
+            | <%= link_to "edit", edit_note_record_path(@note_id, record["_id"]) %>
+            | <%= link_to "destroy", note_record_path(@note_id, record["_id"]), method: "delete" %>
+          <% end %>
         </td>
         <% @note_labels.each do |label| %>
           <td><pre><%= record[label["lid"].to_s] %></pre></td>
