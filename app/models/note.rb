@@ -22,8 +22,8 @@ def Note.update_one(id, note)
 end
 
 def Note.delete_one(note)
-  #TODO: delete releated data (note_info,relations,records)
-  Note.remove({_id: BSON::ObjectId(note)})
+  #Note.remove({_id: BSON::ObjectId(note)})
+  Note.update({_id: BSON::ObjectId(note)}, {'$set'=>{"deleted"=>1}})
 end
 
 def Note.create_one_label(note_id, label)
@@ -31,7 +31,7 @@ def Note.create_one_label(note_id, label)
 
   label[:lid] = BSON::ObjectId.new
   # position的赋值是否有更好的实现方法？
-  label[:pos] = Note.find_one(_id: BSON::ObjectId(note_id))["labels"].to_a.length + 1
+  label[:pos] = Note.find_one(_id: BSON::ObjectId(note_id))["labels"].to_a.find_all{|l| l["deleted"]!=1}.length + 1
   label[:created_at] = label[:updated_at] = Time.now
   Note.update({_id: BSON::ObjectId(note_id)}, {'$addToSet'=>{labels: label}})
   return {lid: label[:lid], message: "label successfully created!"}
@@ -46,21 +46,32 @@ def Note.update_one_label(label_id, label)
 end
 
 def Note.delete_one_label(note_id,label_id)
-  #TODO: delete releated data (note_info,records)
-  #TODO: 调整label后面的pos值（-1）
-  Note.update({_id: BSON::ObjectId(note_id)}, {'$pull'=>{labels: {lid: BSON::ObjectId(label_id)}}})
+  deleted_pos=(Note.find_one(_id: BSON::ObjectId(note_id))["labels"].find{|l| l["lid"].to_s==label_id})["pos"]
+  Note.update({'labels.lid'=>BSON::ObjectId(label_id)}, {'$set'=>{"labels.$.deleted"=>1}})
+  Note.find_one(_id: BSON::ObjectId(note_id))["labels"].find_all{|l| l["pos"]>deleted_pos}.each do |label|
+    label["pos"] -= 1
+    Note.update({'_id'=>BSON::ObjectId(note_id),'labels.lid'=>label["lid"]}, {'$set'=>{"labels.$.pos"=>label["pos"]}})
+  end
+  #Note.update({_id: BSON::ObjectId(note_id)}, {'$pull'=>{labels: {lid: BSON::ObjectId(label_id)}}})
+  #Note.update({'_id'=>BSON::ObjectId(note_id),'labels.pos'=>{'$gt'=>deleted_pos}}, {'$inc'=>{"labels.$.pos"=>(-1)}})
 end
 
 def Note.writable_labels(note, current_user)
   labels_pre = []
   note["labels"].each do |l|
-    labels_pre << l if !l["owners"] or l["owners"].blank? or (l["owners"].split.include? current_user)
+    unless l["deleted"] == 1
+      labels_pre << l if !l["owners"] or l["owners"].blank? or (l["owners"].split.include? current_user)
+    end
   end
   labels = labels_pre.sort_by {|l| l["pos"] }
 end
 
 def Note.readable_labels(note, current_user)
-  labels = note["labels"].sort_by {|l| l["pos"] }
+  labels_pre = []
+  note["labels"].each do |l|
+    labels_pre << l unless l["deleted"] == 1
+  end
+  labels = labels_pre.sort_by {|l| l["pos"] }
 end
 
 private

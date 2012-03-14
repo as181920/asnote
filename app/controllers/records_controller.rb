@@ -11,7 +11,7 @@ class RecordsController < ApplicationController
 
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
-    @note_labels = @note["labels"].sort_by {|l| l["pos"] }
+    @labels = Note.readable_labels(@note, current_user)
     #TODO: 优化实现代码
     case record_permission_type(@note_id)
     when "owner","default" , "public_team", "public_tp"

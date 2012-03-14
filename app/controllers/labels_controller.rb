@@ -3,7 +3,7 @@ class LabelsController < ApplicationController
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
     @max_pos = ((Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].sort_by {|l| l["pos"]}).last)["pos"] 
-    @labels = @note["labels"].sort_by {|l| l["pos"] }
+    @labels = Note.readable_labels(@note, current_user)
   end
 
   def sort

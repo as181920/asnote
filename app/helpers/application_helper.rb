@@ -36,6 +36,7 @@ module ApplicationHelper
 
       if if_note_write?(id)
         menu += "<a href=#{edit_note_path(id)}>编辑表信息</a>&nbsp;&nbsp;"
+        menu += "<a  rel='nofollow' data-method='delete' href=#{note_path(id)}>删除表</a>&nbsp;&nbsp;"
       end
       menu += "<a href=#{note_records_path(id)}>表数据页</a>"
       menu += "&nbsp;&nbsp;<a href=#{note_labels_path(id)}>表的列信息</a>"

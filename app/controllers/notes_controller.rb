@@ -5,7 +5,7 @@ class NotesController < ApplicationController
   before_filter :note_write?, only: [:edit, :update, :destroy]
 
   def index
-    @notes = Note.find(permission: {'$nin'=>["private_owner","private_team","private_tp","private_personal"]}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
+    @notes = Note.find(permission: {'$nin'=>["private_owner","private_team","private_tp","private_personal"]}, deleted: {'$ne'=>1}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
     @cnt_pages=(Note.find.count.to_f / 10).ceil
   end
 
