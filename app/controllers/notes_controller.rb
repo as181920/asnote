@@ -1,13 +1,16 @@
+# encoding: utf-8
 class NotesController < ApplicationController
-  before_filter :if_login, only: [:new, :create]
-  before_filter :if_owner, only: [:edit, :update, :destroy]
+  before_filter :if_login?, only: [:new, :create]
+  before_filter :note_read?, only: [:show]
+  before_filter :note_write?, only: [:edit, :update, :destroy]
 
   def index
-    @notes = Note.find.sort([["updated_at", "descending"]]).page(params[:page].to_i)
+    @notes = Note.find(permission: {'$nin'=>["private_owner","private_team","private_tp","private_personal"]}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
     @cnt_pages=(Note.find.count.to_f / 10).ceil
   end
 
   def new
+    @note = {}
   end
 
   def create
@@ -21,11 +24,20 @@ class NotesController < ApplicationController
   end
 
   def edit
-    @note = Note.find_one({_id: BSON::ObjectId(params[:id])})
+    @id = params[:id]
+    @note = Note.find_one({_id: BSON::ObjectId(@id)})
+    @note_name = @note["name"]
   end
 
   def update
-    redirect_to notes_path, notice: "note successfully updated!"
+    @id = params[:id]
+    note = Note.update_one(@id, params[:note])
+    if note[:objid]
+      redirect_to note_path(params[:id]), notice: note[:message]
+    else
+      flash[:error] = note[:message]
+      redirect_to edit_note_path(@id)
+    end
   end
 
   def show
@@ -40,5 +52,24 @@ class NotesController < ApplicationController
       redirect_to notes_path
     end
   end
+
+  private
+  def note_read?
+    note_id = params[:id]
+    note = Note.find_one(_id: BSON::ObjectId(note_id))
+    return true if note["permission"] == "default" or note["permission"] =~ /public/
+    return true if note["permission"] =~ /private/ and current_user and (note["owners"]+note["tusers"].to_a+note["tpusers"].to_a+note["pusers"].to_a).include? BSON::ObjectId(current_user)
+    flash[:error] = "暂时没有权限查看该表"
+    redirect_to :back rescue redirect_to notes_path
+  end
+
+  def note_write?
+    note_id = params[:id]
+    note = Note.find_one(_id: BSON::ObjectId(note_id))
+    return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
+    flash[:error] = "暂时没有权限编辑该表"
+    redirect_to :back rescue redirect_to notes_path
+  end
+
 end
 

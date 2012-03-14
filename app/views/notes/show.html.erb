@@ -1,1 +1,14 @@
-note info page
+<BR/>
+<b>表的详细信息:</b><BR/>
+<BR/>
+<p> <strong>名称：</strong> <%= @note["name"] %> </p>
+<p> <strong>详细描述：</strong><br/><%= @note["comment"] %> </p>
+<p> <strong>权限类型：</strong><%= @note["permission"] %> </p>
+<p> <strong>创建时间：</strong><%= @note["created_at"].localtime %> </p>
+<p> <strong>最后更新时间：</strong><%= @note["updated_at"].localtime %> </p>
+<p> <strong>所有者：</strong>
+<% @note["owners"].each do |uid| %>
+  <%= link_to User.find_one(_id: uid)["email"], user_path(uid) %> &nbsp;
+<% end %>
+</p>
+

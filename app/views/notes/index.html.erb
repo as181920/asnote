@@ -1,4 +1,7 @@
 Notes list:
+<%= raw pagination(@cnt_pages, params) %>
+<br/>
+<br/>
 <ol>
   <% @notes.each do |note| %>
     <li><%= link_to note["name"], note_records_path(note["_id"]) %>(<%= note["_id"] %>)</li>

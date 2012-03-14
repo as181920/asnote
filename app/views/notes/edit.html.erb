@@ -1,1 +1,10 @@
-edit page...
+<b><%= link_to @note_name, note_path(@id) %> edit...</b>
+<br/>
+<br/>
+<br/>
+<%= form_tag note_path(@id), method: "put" do %>
+  <%= render "note_form" %>
+  <br/>
+  <%= submit_tag("更新") %>
+<% end %>
+

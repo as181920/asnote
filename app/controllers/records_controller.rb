@@ -1,6 +1,6 @@
 # encoding=utf-8
 class RecordsController < ApplicationController
-  before_filter :record_permission_write?, except: [:index, :show]
+  before_filter :record_write?, except: [:index, :show]
 
   def index
     unless note=Note.find_one({_id: BSON::ObjectId(params[:note_id])}, {fields: {labels: 1, _id: 0}}) and note["labels"]
@@ -24,7 +24,7 @@ class RecordsController < ApplicationController
       @cnt_pages=(@cnt_records.to_f / 10).ceil
     else
       flash[:error] = "目前没有权限查看该表数据"
-      redirect_to :back
+      redirect_to :back rescue redirect_to notes_path
     end
   end
 
@@ -86,7 +86,7 @@ class RecordsController < ApplicationController
 
   private
   #TODO: 其它note权限类型的处理？
-  def record_permission_write?
+  def record_write?
     note_id = params[:note_id]
     note = Note.find_one({_id: BSON::ObjectId(note_id)})
     owners = note["owners"]

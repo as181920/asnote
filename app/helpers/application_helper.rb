@@ -34,6 +34,9 @@ module ApplicationHelper
     when note_path
       id = request.path.split("/")[2]
 
+      if if_note_write?(id)
+        menu += "<a href=#{edit_note_path(id)}>编辑表信息</a>&nbsp;&nbsp;"
+      end
       menu += "<a href=#{note_records_path(id)}>表数据页</a>"
       menu += "&nbsp;&nbsp;<a href=#{note_labels_path(id)}>表的列信息</a>"
     when users_path
@@ -87,7 +90,7 @@ module ApplicationHelper
       note_id = request.path.split("/")[2]
       id=request.path.split("/")[4]
 
-      menu += "<a href=#{home_user_path(current_user)}>我的表</a>"
+      menu += "<a href=#{note_path(note_id)}>查看表信息</a>"
       menu += "&nbsp;&nbsp;<a href=#{note_labels_path(note_id)}>返回表</a>"
     else
     end

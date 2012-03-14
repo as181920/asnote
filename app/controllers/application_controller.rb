@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_user_email
   helper_method :if_record_write?
+  helper_method :if_note_write?
+  helper_method :if_login?
   private
   def current_user
     @current_user ||= user_from_session
@@ -29,16 +31,15 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def if_login
+  def if_note_write?(id)
+    note = Note.find_one(_id: BSON::ObjectId(id))
+    return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
+  end
+
+  def if_login?
     session[:original_url] = request.url
     redirect_to login_path, notice: "need login." unless current_user
   end
 
-  def if_owner
-    unless current_user and Note.find_one({_id: BSON::ObjectId(params[:id])}, {fields: {owners: 1, _id: 0}})["owners"].to_a.include? BSON::ObjectId(current_user)
-      flash[:error] = "you should be owner to edit this note"
-      redirect_to note_path(params[:id])
-    end
-  end
 end
 
