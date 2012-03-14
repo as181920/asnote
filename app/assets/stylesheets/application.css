@@ -25,6 +25,10 @@ button {
   margin-left: 10px;
 }
 
+form {
+  display: inline;
+}
+
 #container {
   position: relative;
   text-align: center;
@@ -168,7 +172,8 @@ button {
   float: left;
   display: block;
 }
-
-form {
+.pagination {
   display: inline;
+  float: right;
 }
+

@@ -16,10 +16,12 @@ class RecordsController < ApplicationController
     case record_permission_type(@note_id)
     when "owner","default" , "public_team", "public_tp"
       @records = Record.find({nid: BSON::ObjectId(@note_id)}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
-      @cnt_pages=(Record.find({nid: BSON::ObjectId(@note_id)}).count.to_f / 10).ceil
+      @cnt_records = Record.find({nid: BSON::ObjectId(@note_id)}).count
+      @cnt_pages=(@cnt_records.to_f / 10).ceil
     when "public_personal"
       @records = Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
-      @cnt_pages=(Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).count.to_f / 10).ceil
+      @cnt_records=Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).count
+      @cnt_pages=(@cnt_records.to_f / 10).ceil
     else
       flash[:error] = "目前没有权限查看该表数据"
       redirect_to :back
