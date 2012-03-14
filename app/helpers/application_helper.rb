@@ -111,18 +111,33 @@ module ApplicationHelper
   end
  
   def other_user_notice
-    menu = ""
+    result = ""
     unless current_user
       uid=request.path.split("/")[2]
       if uid.to_s.length == 24
         if user = User.find_one(_id: BSON::ObjectId(uid))
-          menu += "<div id='content_top'>"
-          menu += "正在查看用户: #{user["email"]} 的信息<BR/>"
-          menu += "</div>"
+          result += "<div id='content_top'>"
+          result += "正在查看用户: #{user["email"]} 的信息<BR/>"
+          result += "</div>"
         end
       end
     end
-    menu
+    result
+  end
+  
+  def pagination(cnt_pages, params)
+    result = ""
+    result += "<div class='pagination'>"
+    if cnt_pages > 1 then
+      cnt_pages.times do |i|
+        result += "[" if (params[:page].nil? and i==0) or params[:page].to_i==i+1
+        result += "<a href=#{request.path}?page=#{i+1}>#{i+1}</a>"
+        result += "]" if (params[:page].nil? and i==0) or params[:page].to_i==i+1
+        result += " "
+      end
+    end
+    result += "</div>"
+    result
   end
 
 end

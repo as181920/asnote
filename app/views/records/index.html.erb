@@ -1,15 +1,7 @@
 <div>
   <br/>
   <b><%= link_to @note["name"], note_records_path(@note_id) %><div class="count">(<%= @cnt_records %>)</div>---Records: </b>
-  <div class="pagination">
-    <% if @cnt_pages > 1 %>
-      <% @cnt_pages.times do |i| %>
-        <%= "[" if (params[:page].nil? and i==0) or params[:page].to_i==i+1 %>
-        <%= link_to i+1, {page: i+1} %>
-        <%= "]" if (params[:page].nil? and i==0) or params[:page].to_i==i+1 %>
-      <% end %>
-    <% end %>
-  </div>
+  <%= raw pagination(@cnt_pages, params) %>
   <br/>
   <br/>
   <table class="records">
