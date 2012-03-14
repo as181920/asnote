@@ -79,7 +79,9 @@ module ApplicationHelper
 
       menu += "<a href=#{note_path(id)}>查看表信息</a>"
       menu += "&nbsp;&nbsp;<a href=#{note_records_path(id)}>表数据页</a>"
-      menu += "&nbsp;&nbsp;<a href=#{new_note_label_path(note_id)}>新建列</a>"
+      if if_label_write?(id, nil)
+        menu += "&nbsp;&nbsp;<a href=#{new_note_label_path(note_id)}>新建列</a>"
+      end
     when note_label_path
       note_id = request.path.split("/")[2]
       id=request.path.split("/")[4]
