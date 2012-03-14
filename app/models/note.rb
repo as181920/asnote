@@ -41,7 +41,7 @@ def Note.update_one_label(label_id, label)
   val = validate_note_label(label); return val unless val[:lid]
 
   #TODO: 修改实现代码，避免每一个属性进行set，使得能够一句更新所有属性
-  Note.update({'labels.lid'=>BSON::ObjectId(label_id)}, {'$set'=>{"labels.$.name"=>label['name'], "labels.$.comment"=>label["comment"], "labels.$.updated_at"=>Time.now}})
+  Note.update({'labels.lid'=>BSON::ObjectId(label_id)}, {'$set'=>{"labels.$.name"=>label['name'], "labels.$.format"=>label["format"], "labels.$.select"=>label["select"],"labels.$.default"=>label["default"],"labels.$.owners"=>label["owners"] , "labels.$.updated_at"=>Time.now}})
   return {lid: label_id, message: "label successfully created!"}
 end
 

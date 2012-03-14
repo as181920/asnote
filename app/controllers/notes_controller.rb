@@ -59,7 +59,7 @@ class NotesController < ApplicationController
     note_id = params[:id]
     note = Note.find_one(_id: BSON::ObjectId(note_id))
     return true if note["permission"] == "default" or note["permission"] =~ /public/
-    return true if note["permission"] =~ /private/ and current_user and (note["owners"]+note["tusers"].to_a+note["tpusers"].to_a+note["pusers"].to_a).include? BSON::ObjectId(current_user)
+    return true if note["permission"] =~ /private/ and current_user and (note["owners"]+note["users"].to_a).include? BSON::ObjectId(current_user)
     flash[:error] = "暂时没有权限查看该表"
     redirect_to :back rescue redirect_to notes_path
   end

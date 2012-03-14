@@ -4,12 +4,12 @@ module ApplicationHelper
     menu = ""
     case request.path
     when root_path
+      if current_user
+        menu += "<a href=#{home_user_path(current_user)}>我的表应用</a>&nbsp;&nbsp;"
+        menu += "<a href=#{new_note_path}>新建表</a>&nbsp;&nbsp;"
+      end
       menu += "<a href=#{notes_path}>所有表</a>"
       menu += "&nbsp;&nbsp;<a href=#{users_path}>所有用户</a>"
-      if current_user
-        menu += "&nbsp;&nbsp;<a href=#{home_user_path(current_user)}>我的表</a>"
-        menu += "&nbsp;&nbsp;<a href=#{new_note_path}>新建表</a>"
-      end
     when home_user_path
       user_id=request.path.split("/")[2]
 
@@ -36,6 +36,9 @@ module ApplicationHelper
 
       if if_note_write?(id)
         menu += "<a href=#{edit_note_path(id)}>编辑表信息</a>&nbsp;&nbsp;"
+        #TODO: **********************finish it now
+        menu += "<a href=#{edit_note_path(id)}>添加该表所有者</a>&nbsp;&nbsp;"
+        menu += "<a href=#{edit_note_path(id)}>添加该表普通用户</a>&nbsp;&nbsp;" if if_note_private?(id)
         menu += "<a  rel='nofollow' data-method='delete' href=#{note_path(id)}>删除表</a>&nbsp;&nbsp;"
       end
       menu += "<a href=#{note_records_path(id)}>表数据页</a>"

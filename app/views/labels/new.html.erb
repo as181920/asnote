@@ -1,26 +1,9 @@
-<b><%= link_to @note_name, note_records_path(@note_id) %>: </b>
+<b><%= link_to @note_name, note_records_path(@note_id) %>: 添加列... </b>
 <br/>
 <br/>
 <%= form_tag note_labels_path(@note_id) do %>
-  <%= label_tag("label[name]", "label") %>
-  <%= text_field_tag("label[name]","") %>
+  <%= render "label_form" %>
   <br/>
 
-  <%= label_tag("label[format]", "format") %>
-  <%= select_tag("label[format]", options_for_select(["","String","Text","RichText","Date","Time","Number","Select","MultiSelect"])) %>
-  <br/>
-
-  <%= label_tag("label[select]", "select_items(splited by space)") %><BR/>
-  <%= text_area_tag("label[select]", "") %>
-  <br/>
-
-  <%= label_tag("label[default]", "default_value") %><BR/>
-  <%= text_area_tag("label[default]", "") %>
-  <br/>
-
-  <%= label_tag("label[owners]", "仅针对以下用户可用：（输入用户id，空格或换行区分）") %><BR/>
-  <%= text_area_tag("label[owners]", "") %>
-  <br/>
-
-  <%= submit_tag("Add") %>
+  <%= submit_tag("添加") %>
 <% end %>

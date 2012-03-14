@@ -15,13 +15,13 @@ class LabelsController < ApplicationController
     case params["label"]["mv_pos"]
     when "up"
       if params["label"]["c_pos"].to_i > 0
-        last_label = Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["pos"]==params["label"]["c_pos"].to_i}
+        last_label = Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["pos"]==params["label"]["c_pos"].to_i and label["deleted"]!=1}
         Note.update({'labels.lid'=>BSON::ObjectId(params["label"]["lid"])}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i}})
         Note.update({'labels.lid'=>last_label["lid"]}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i+1}})
       end
     when "down"
       if params["label"]["c_pos"].to_i < @max_pos - 1
-        next_label = Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["pos"]==params["label"]["c_pos"].to_i+2}
+        next_label = Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["pos"]==params["label"]["c_pos"].to_i+2 and label["deleted"]!=1}
         Note.update({'labels.lid'=>BSON::ObjectId(params["label"]["lid"])}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i+2}})
         Note.update({'labels.lid'=>next_label["lid"]}, {'$set'=>{"labels.$.pos"=>params["label"]["c_pos"].to_i+1}})
       end
@@ -34,6 +34,7 @@ class LabelsController < ApplicationController
   def new
     @note_id = params[:note_id]
     @note_name = Note.find_one({_id: BSON::ObjectId(@note_id)})["name"]
+    @label = {}
   end
 
   def create
@@ -48,9 +49,11 @@ class LabelsController < ApplicationController
   end
 
   def edit
-    @note = Note.find_one({_id: BSON::ObjectId(params[:note_id])})
-    @label_id = params[:id]
-    @label = @note["labels"].find{|label| label["lid"]==BSON::ObjectId(@label_id) }
+    @note_id = params[:note_id]
+    @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
+    @note_name = @note["name"]
+    @id = params[:id]
+    @label = @note["labels"].find{|label| label["lid"]==BSON::ObjectId(@id) }
   end
 
   def update
@@ -85,7 +88,7 @@ class LabelsController < ApplicationController
     #id = request.path.split("/")[4]
     note = Note.find_one(_id: BSON::ObjectId(note_id))
     return true if note["permission"] == "default" or note["permission"] =~ /public/
-    return true if note["permission"] =~ /private/ and current_user and (note["owners"]+note["tusers"].to_a+note["tpusers"].to_a+note["pusers"].to_a).include? BSON::ObjectId(current_user)
+    return true if note["permission"] =~ /private/ and current_user and (note["owners"]+note["users"].to_a).include? BSON::ObjectId(current_user)
     flash[:error] = "暂时没有权限查看该表的列信息"
     redirect_to :back rescue redirect_to notes_path
   end

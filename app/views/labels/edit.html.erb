@@ -1,18 +1,9 @@
 <b><%= link_to @note_name, note_records_path(@note_id) %>: editing...</b>
 <br/>
 <br/>
-<%= form_tag note_records_path(@note_id) do %>
-  <% @labels.each do |label| %>
-    <% case label["format"] %>
-    <% when "Select" %>
-      <%= label_tag("record[#{label['lid']}]", label['name']) %> 
-      <%= select_tag("record[#{label['lid']}]", options_for_select(label["select"].to_s.split.to_a)) %>
-    <% else %>
-      <%= label_tag("record[#{label['lid']}]", label['name']) %> 
-      <%= text_area_tag("record[#{label['lid']}]", "") %>
-    <% end %>
-    <br/>
-  <% end %>
+<%= form_tag note_label_path(@note_id, @id), method: "put" do %>
+  <%= render "label_form" %>
+  <br/>
 
-  <%= submit_tag("Add") %>
+  <%= submit_tag("更新") %>
 <% end %>
