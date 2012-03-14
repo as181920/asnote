@@ -14,7 +14,7 @@ class RecordsController < ApplicationController
     @labels = Note.readable_labels(@note, current_user)
     #TODO: 优化实现代码
     case record_permission_type(@note_id)
-    when "owner","default" , "public_team", "public_tp"
+    when "owner","default" , "public_team", "public_tp", "public_personal"
       @records = Record.find({nid: BSON::ObjectId(@note_id)}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
       @cnt_records = Record.find({nid: BSON::ObjectId(@note_id)}).count
       @cnt_pages=(@cnt_records.to_f / 10).ceil
@@ -117,6 +117,8 @@ class RecordsController < ApplicationController
     note = Note.find_one({_id: BSON::ObjectId(note_id)})
     owners = note["owners"]
     return "public_team" if note["permission"] == "public_team"
+    return "public_personal" if note["permission"] == "public_personal"
+    return "public_tp" if note["permission"] == "public_tp"
     if current_user
       if owners.include? BSON::ObjectId(current_user)
         "owner"

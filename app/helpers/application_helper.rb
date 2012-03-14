@@ -85,8 +85,10 @@ module ApplicationHelper
       id=request.path.split("/")[4]
 
       menu += "<a href=#{note_records_path(note_id)}>返回表</a>"
-      menu += "&nbsp;&nbsp;<a href=#{edit_note_label_path(note_id, id)}>编辑列信息</a>"
-      menu += "&nbsp;&nbsp;<a data-method='delete' href=#{note_label_path(note_id, id)}>删除列</a>"
+      if if_label_write?(note_id, id)
+        menu += "&nbsp;&nbsp;<a href=#{edit_note_label_path(note_id, id)}>编辑列信息</a>"
+        menu += "&nbsp;&nbsp;<a data-method='delete' href=#{note_label_path(note_id, id)}>删除列</a>"
+      end
     when new_note_label_path
       note_id = request.path.split("/")[2]
       id=request.path.split("/")[4]

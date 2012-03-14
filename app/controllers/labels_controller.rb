@@ -1,4 +1,8 @@
+# encoding: utf-8
 class LabelsController < ApplicationController
+  before_filter :label_read?, only: [:index, :show]
+  before_filter :label_write?, only: [:new, :create, :edit, :update, :destroy]
+
   def index
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
@@ -74,4 +78,25 @@ class LabelsController < ApplicationController
       redirect_to note_labels_path(@note_id)
     end
   end
+
+  private
+  def label_read?
+    note_id = request.path.split("/")[2]
+    #id = request.path.split("/")[4]
+    note = Note.find_one(_id: BSON::ObjectId(note_id))
+    return true if note["permission"] == "default" or note["permission"] =~ /public/
+    return true if note["permission"] =~ /private/ and current_user and (note["owners"]+note["tusers"].to_a+note["tpusers"].to_a+note["pusers"].to_a).include? BSON::ObjectId(current_user)
+    flash[:error] = "暂时没有权限查看该表的列信息"
+    redirect_to :back rescue redirect_to notes_path
+  end
+
+  def label_write?
+    note_id = request.path.split("/")[2]
+    #id = request.path.split("/")[4]
+    note = Note.find_one(_id: BSON::ObjectId(note_id))
+    return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
+    flash[:error] = "暂时没有权限编辑该表的列信息"
+    redirect_to :back rescue redirect_to note_path(note_id)
+  end
 end
+

@@ -41,7 +41,8 @@ class NotesController < ApplicationController
   end
 
   def show
-    @note = Note.find_one({_id: BSON::ObjectId(params[:id])})
+    @id = params[:id]
+    @note = Note.find_one({_id: BSON::ObjectId(@id)})
   end
 
   def destroy

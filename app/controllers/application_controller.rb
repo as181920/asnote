@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_email
   helper_method :if_record_write?
   helper_method :if_note_write?
+  helper_method :if_label_write?
   helper_method :if_login?
   private
   def current_user
@@ -26,13 +27,18 @@ class ApplicationController < ActionController::Base
     note = Note.find_one(_id: BSON::ObjectId(note_id))
     record = Record.find_one(_id: BSON::ObjectId(id))
     return true if note["permission"] == "public_team"
-    return true if note["owners"].include? BSON::ObjectId(current_user)
+    return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
     return true if current_user and record["uid"].to_s == current_user
     false
   end
 
   def if_note_write?(id)
     note = Note.find_one(_id: BSON::ObjectId(id))
+    return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
+  end
+
+  def if_label_write?(note_id, id)
+    note = Note.find_one(_id: BSON::ObjectId(note_id))
     return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
   end
 

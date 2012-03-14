@@ -1,5 +1,5 @@
 <BR/>
-<b>表的详细信息:</b><BR/>
+<b><%= link_to "表的详细信息:", note_records_path(@id) %></b><BR/>
 <BR/>
 <p> <strong>名称：</strong> <%= @note["name"] %> </p>
 <p> <strong>详细描述：</strong><br/><%= @note["comment"] %> </p>

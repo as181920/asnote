@@ -8,11 +8,13 @@ Labels list:
   <% @labels.each_with_index do |label, i| %>
     <li>
       <%= link_to label["name"], note_label_path(@note_id, label["lid"]) %>(<%= label["format"] %>)
-      [
-      <%= link_to "edit", edit_note_label_path(@note_id, label["lid"]) %>
-      |
-      <%= link_to "destroy", note_label_path(@note_id, label["lid"]), :method => :delete %>
-      ]
+      <% if if_label_write?(@note_id, label["lid"]) %>
+        [
+        <%= link_to "edit", edit_note_label_path(@note_id, label["lid"]) %>
+        |
+        <%= link_to "destroy", note_label_path(@note_id, label["lid"]), :method => :delete %>
+        ]
+      <% end %>
       <div class="up_down">
         <% ["up","down"].each do |mv| %>
           <% if (mv=="up" and i==0) or (mv=="down" and i==@max_pos-1) %>
