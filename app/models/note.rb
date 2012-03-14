@@ -45,6 +45,18 @@ def Note.delete_one_label(note_id,label_id)
   Note.update({_id: BSON::ObjectId(note_id)}, {'$pull'=>{labels: {lid: BSON::ObjectId(label_id)}}})
 end
 
+def Note.writable_labels(note, current_user)
+  labels_pre = []
+  note["labels"].each do |l|
+    labels_pre << l if !l["owners"] or l["owners"].blank? or (l["owners"].split.include? current_user)
+  end
+  labels = labels_pre.sort_by {|l| l["pos"] }
+end
+
+def Note.readable_labels(note, current_user)
+  labels = note["labels"].sort_by {|l| l["pos"] }
+end
+
 private
 def validate_create_note(note)
   #TODO: 系统保留不能存入（_开头的名称）

@@ -1,21 +1,9 @@
-<b><%= link_to @note_name, note_records_path(@note_id) %>: </b>
+<b><%= link_to @note_name, note_records_path(@note_id) %>: add...</b>
 <br/>
 <br/>
 <%= form_tag note_records_path(@note_id) do %>
-  <% @labels.each do |label| %>
-    <%= label_tag("record[#{label['lid']}]", label['name']) %> 
-    <% case label["format"] %>
-    <% when "String" %>
-      <%= text_field_tag("record[#{label['lid']}]", "") %>
-    <% when "Date" %>
-      <%= datepicker_input "record[#{label['lid']}]", "", {dateFormat: 'yy-mm-dd'} %>
-    <% when "Select" %>
-      <%= select_tag("record[#{label['lid']}]", options_for_select(label["select"].to_s.split.to_a)) %>
-    <% else %>
-      <%= text_area_tag("record[#{label['lid']}]", "") %>
-    <% end %>
-    <br/>
-  <% end %>
+  <%= render "record_form" %>
 
-  <%= submit_tag("Add") %>
+  <%= submit_tag("新增") %>
 <% end %>
+

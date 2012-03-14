@@ -30,11 +30,8 @@ class RecordsController < ApplicationController
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
     @note_name = @note["name"]
-    labels_pre = []
-    @note["labels"].each do |l|
-      labels_pre << l if !l["owners"] or l["owners"].blank? or (l["owners"].split.include? current_user)
-    end
-    @labels = labels_pre.sort_by {|l| l["pos"] }
+    @labels = Note.writable_labels(@note, current_user)
+    @record = {}
   end
 
   def create
@@ -52,8 +49,9 @@ class RecordsController < ApplicationController
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
     @note_name = @note["name"]
-    @labels = @note["labels"].sort_by {|l| l["pos"] }
-    @record = Record.find_one({_id: BSON::ObjectId(params[:id])})
+    @labels = Note.writable_labels(@note, current_user)
+    @id = params[:id]
+    @record = Record.find_one({_id: BSON::ObjectId(@id)})
   end
 
   def update
@@ -69,6 +67,7 @@ class RecordsController < ApplicationController
 
   def show
     @note = Note.find_one({_id: BSON::ObjectId(params[:note_id])})
+    @labels = Note.readable_labels(@note, current_user)
     @record = Record.find_one({_id: BSON::ObjectId(params[:id])})
   end
 

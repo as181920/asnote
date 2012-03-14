@@ -1,0 +1,14 @@
+<% @labels.each do |label| %>
+  <%= label_tag("record[#{label['lid']}]", label['name']) %> 
+  <% case label["format"] %>
+  <% when "String" %>
+    <%= text_field_tag("record[#{label['lid']}]", @record[label['lid'].to_s]) %>
+  <% when "Date" %>
+    <%= datepicker_input "record[#{label['lid']}]", "", {dateFormat: 'yy-mm-dd', value: (date=@record[label['lid'].to_s]).nil? ? Date.today.strftime : date[0]} %>
+  <% when "Select" %>
+    <%= select_tag("record[#{label['lid']}]", options_for_select(label["select"].to_s.split.to_a, @record[label['lid'].to_s])) %>
+  <% else %>
+    <%= text_area_tag("record[#{label['lid']}]", @record[label['lid'].to_s]) %>
+  <% end %>
+  <br/>
+<% end %>

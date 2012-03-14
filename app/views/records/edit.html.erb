@@ -1,0 +1,8 @@
+<b><%= link_to @note_name, note_records_path(@note_id) %>: edit...</b>
+<br/>
+<br/>
+<%= form_tag note_record_path(@note_id, @id), method: "put" do %>
+  <%= render "record_form" %>
+
+  <%= submit_tag("更新") %>
+<% end %>
