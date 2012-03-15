@@ -92,6 +92,7 @@ class RecordsController < ApplicationController
     owners = note["owners"]
     note_permission_type = record_permission_type(note_id)
     return true if note["permission"] == "public_team"
+    return true if note["permission"] == "private_team" and note["users"].include? BSON::ObjectId(current_user)
     if current_user
       record_id = params[:id]
       record = Record.find_one({_id: BSON::ObjectId(record_id)}) if record_id
