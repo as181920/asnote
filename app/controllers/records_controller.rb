@@ -4,7 +4,7 @@ class RecordsController < ApplicationController
 
   def index
     unless note=Note.find_one({_id: BSON::ObjectId(params[:note_id])}, {fields: {labels: 1, _id: 0}}) and note["labels"]
-      flash[:error] = "should add labels and then add record!"
+      flash[:error] = "表暂时没有任何列，需要先添加列再操作相应数据"
       redirect_to new_note_label_path(params[:note_id])
       return true
     end
