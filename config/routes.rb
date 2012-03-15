@@ -10,6 +10,8 @@ Asnote::Application.routes.draw do
       post :add_owner
       get :new_user
       post :add_user
+      delete :delete_owner
+      delete :delete_user
     end
     resources :labels do
       collection do

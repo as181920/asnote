@@ -12,7 +12,7 @@ Labels list:
         [
         <%= link_to "edit", edit_note_label_path(@note_id, label["lid"]) %>
         |
-        <%= link_to "destroy", note_label_path(@note_id, label["lid"]), :method => :delete %>
+        <%= link_to "destroy", note_label_path(@note_id, label["lid"]), :method => :delete, confirm: "不可找回，确认删除？" %>
         ]
       <% end %>
       <div class="up_down">

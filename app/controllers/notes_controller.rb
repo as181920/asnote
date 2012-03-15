@@ -91,6 +91,30 @@ class NotesController < ApplicationController
     end
   end
 
+  def delete_owner
+    @note_id = params[:id]
+    @user_id = params[:user_id]
+
+    if Note.delete_owner(@note_id, @user_id)
+      redirect_to note_path(@note_id), notice: "表所有者已删除!"
+    else
+      flash[:error] = "最后一个所有者不可删除，或其它异常!"
+      redirect_to note_path(@note_id)
+    end
+  end
+
+  def delete_user
+    @note_id = params[:id]
+    @user_id = params[:user_id]
+
+    if Note.delete_user(@note_id, @user_id)
+      redirect_to note_path(@note_id), notice: "表普通用户已删除!"
+    else
+      flash[:error] = "操作发生异常!"
+      redirect_to note_path(@note_id)
+    end
+  end
+
   private
   def note_read?
     note_id = params[:id]

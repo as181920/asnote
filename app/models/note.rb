@@ -82,12 +82,21 @@ def Note.create_owner(note_id,user_email)
   return {uid: user_id, message: "表所有者添加成功!"}
 end
 
+def Note.delete_owner(note_id, user_id)
+  return false if Note.find_one(_id: BSON::ObjectId(note_id))["owners"].to_a.length <= 1
+  Note.update({_id: BSON::ObjectId(note_id)}, {'$pull'=>{owners: BSON::ObjectId(user_id)}})
+end
+
 def Note.create_user(note_id,user_email)
   val = validate_user(user_email); return val unless val[:uid]
 
   user_id = val[:uid]
   Note.update({_id: BSON::ObjectId(note_id)}, {'$addToSet'=>{users: BSON::ObjectId(user_id)}})
   return {uid: user_id, message: "表普通用户添加成功!"}
+end
+
+def Note.delete_user(note_id, user_id)
+  Note.update({_id: BSON::ObjectId(note_id)}, {'$pull'=>{users: BSON::ObjectId(user_id)}})
 end
 
 private
