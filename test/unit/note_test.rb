@@ -16,11 +16,8 @@ class NoteTest < ActiveSupport::TestCase
     assert note = Note.create_one(note_attr)[:objid], "create one note and save to db"
     assert_equal Note.find_one({_id: note})["name"], note_attr[:name]
     assert_equal Note.find_one({_id: note})["comment"], note_attr[:comment]
-    #TODO: update
-    #TODO: need essential filelds when update note
     assert Note.delete_one(note.to_s)
     assert_nil Note.find_one({_id: note})
-    #TODO: test if note releated data have been deleted
   end
 
   test "create note when name not presence" do
@@ -43,12 +40,8 @@ class NoteTest < ActiveSupport::TestCase
     label_attr2={name: "label2", comment: "label2 of note1 for test"}
     assert note_id = Note.create_one(note_attr)[:objid].to_s
     assert label_id = Note.create_one_label(note_id,label_attr)[:lid].to_s
-    #TODO: check data persistence of attr and in_db:create
     assert Note.update_one_label(label_id, label_attr2)[:lid]
-    #TODO: check data persistence of attr and in_db:update
     assert Note.delete_one_label(note_id,label_id)
-    #TODO: this record should not exist in db after delete
-    #TODO: check all releated data (note_info,records) have been deleted
   end
 
   test "create label when label_name not presence" do

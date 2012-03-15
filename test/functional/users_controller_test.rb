@@ -14,7 +14,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:users)
     assert_not_nil assigns(:cnt_pages)
-    #TODO: test pagination
   end
 
   test "should get new" do
@@ -45,7 +44,6 @@ class UsersControllerTest < ActionController::TestCase
       post :create, user: {email: "", password: "password.1", password_confirmation: "password.1"}
     end
     assert_redirected_to new_user_path
-    #TODO: assert_template "new"
     assert_not_nil flash[:error]
   end
 
@@ -60,7 +58,6 @@ class UsersControllerTest < ActionController::TestCase
     new_name = (User.find({_id: user['_id']}).first)[:nick_name]
     assert_not_equal old_name, new_name
 
-    #TODO: assert_redirected_to
     assert_equal 'user information updated!', flash[:notice]
   end
 

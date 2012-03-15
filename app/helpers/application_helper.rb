@@ -36,7 +36,6 @@ module ApplicationHelper
 
       if if_note_write?(id)
         menu += "<a href=#{edit_note_path(id)}>编辑表信息</a>&nbsp;&nbsp;"
-        #TODO: **********************finish it now
         menu += "<a href=#{new_owner_note_path(id)}>添加该表所有者</a>&nbsp;&nbsp;"
         menu += "<a href=#{new_user_note_path(id)}>添加该表普通用户</a>&nbsp;&nbsp;" if if_note_private?(id)
         menu += "<a  rel='nofollow' data-method='delete' data-confirm='不可找回，确认删除？' href=#{note_path(id)}>删除表</a>&nbsp;&nbsp;"

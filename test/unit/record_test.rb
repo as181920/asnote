@@ -19,10 +19,8 @@ class RecordTest < ActiveSupport::TestCase
     assert label_id2 = Note.create_one_label(note_id,label_attr2)[:lid].to_s
     record_attr={label_id1=>"content1", label_id2=>"content1中文字符"}
     assert record_id = Record.create_one(note_id, record_attr)[:objid]
-    #TODO assert show
     record_attr2={label_id1=>"content2", label_id2=>"content2-日本語とテスト"}
     assert record_id = Record.update_one(record_id.to_s, record_attr2)[:objid]
-    #TODO assert data persistence of attr and in_db
     assert Record.delete_one(record_id.to_s)
     assert_nil Record.find_one({_id: record_id})
   end

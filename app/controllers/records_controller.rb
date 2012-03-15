@@ -1,6 +1,7 @@
 # encoding=utf-8
 class RecordsController < ApplicationController
-  before_filter :record_write?, except: [:index, :show]
+  before_filter :record_creatable?, only: [:new, :create]
+  before_filter :record_writable?, except: [:index, :show, :new, :create]
 
   def index
     unless note=Note.find_one({_id: BSON::ObjectId(params[:note_id])}, {fields: {labels: 1, _id: 0}}) and note["labels"]
@@ -12,13 +13,12 @@ class RecordsController < ApplicationController
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
     @labels = Note.readable_labels(@note, current_user)
-    #TODO: 优化实现代码
-    case record_permission_type(@note_id)
-    when "owner","default" , "public_team", "public_tp", "public_personal", "private_team", "private_tp"
+    case records_scope(@note_id, @note)
+    when "all"
       @records = Record.find({nid: BSON::ObjectId(@note_id)}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
       @cnt_records = Record.find({nid: BSON::ObjectId(@note_id)}).count
       @cnt_pages=(@cnt_records.to_f / 10).ceil
-    when "public_personal", "private_personal"
+    when "mine"
       @records = Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
       @cnt_records=Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).count
       @cnt_pages=(@cnt_records.to_f / 10).ceil
@@ -85,63 +85,66 @@ class RecordsController < ApplicationController
   end
 
   private
-  #TODO: 其它note权限类型的处理？
-  def record_write?
+  def records_scope(note_id, note)
+    return "all" if current_user and note["owners"].include?(BSON::ObjectId(current_user))
+    case  note["permission"]
+    when "default", "public_team", "public_tp"
+      "all"
+    when "public_personal"
+      "mine"
+    when "private_team", "private_tp"
+      if current_user and note["users"].include?(BSON::ObjectId(current_user))
+        "all"
+      else
+        "none"
+      end
+    when "private_personal"
+      if current_user and note["users"].include?(BSON::ObjectId(current_user))
+        "mine"
+      else
+        "none"
+      end
+    else
+      "none"
+    end
+  end
+
+  def record_writable?
     note_id = params[:note_id]
     note = Note.find_one({_id: BSON::ObjectId(note_id)})
-    owners = note["owners"]
-    note_permission_type = record_permission_type(note_id)
-    return true if note["permission"] == "public_team"
-    return true if note["permission"] == "private_team" and note["users"].include? BSON::ObjectId(current_user)
-    if current_user
-      record_id = params[:id]
-      record = Record.find_one({_id: BSON::ObjectId(record_id)}) if record_id
-      if owners.include? BSON::ObjectId(current_user)
-        return true
-      else
-        #TODO: 其它权限类型
-        case note_permission_type
-        when "public_tp"
-          return true if !record_id or record["uid"].to_s == current_user
-        when "public_personal"
-          return true if !record_id or record["uid"].to_s == current_user
-        else
-        end
-      end
+    record_id = params[:id]
+    record = Record.find_one({_id: BSON::ObjectId(record_id)}) if record_id
+
+    return true if current_user and note["owners"].include?(BSON::ObjectId(current_user))
+    case note["permission"]
+    when "public_team"
+      return true
+    when "public_tp","public_personal"
+      return true if (current_user and (record["uid"].to_s == current_user))
+    when "private_team"
+      return true if (current_user and note["users"].include?(BSON::ObjectId(current_user)))
+    when "private_tp", "private_personal"
+      return true if (current_user and note["users"].include?(BSON::ObjectId(current_user)) and (record["uid"].to_s==current_user))
+    else
     end
     flash[:error] = "目前没有权限编辑该条数据"
     redirect_to :back rescue redirect_to note_records_path(note_id)
   end
 
-  #TODO: 确认是否需要该方法，以及优化
-  def record_permission_type(note_id)
+  def record_creatable?
+    note_id = params[:note_id]
     note = Note.find_one({_id: BSON::ObjectId(note_id)})
-    owners = note["owners"]
-    return "public_team" if note["permission"] == "public_team"
-    return "public_personal" if note["permission"] == "public_personal"
-    return "public_tp" if note["permission"] == "public_tp"
-    return "private_team" if note["permission"] == "private_team"
-    return "private_tp" if note["permission"] == "private_tp"
-    if current_user
-      if owners.include? BSON::ObjectId(current_user)
-        "owner"
-      else
-        #TODO: 其它权限类型
-        case note["permission"]
-        when "default"
-          "default"
-        when "public_tp"
-          "public_tp"
-        when "public_personal"
-          "public_personal"
-        else
-          "guest"
-        end
-      end
-    else
-      "guest"
-    end
-  end
 
+    return true if current_user and note["owners"].include?(BSON::ObjectId(current_user))
+    case note["permission"]
+    when "public_team","public_tp","public_personal"
+      return true if current_user
+    when "private_team","private_tp","private_personal"
+      return true if current_user and note["users"].include?(BSON::ObjectId(current_user))
+    else
+    end
+    flash[:error] = "目前没有权限添加数据或未登录"
+    redirect_to :back rescue redirect_to note_records_path(note_id)
+  end
 end
 

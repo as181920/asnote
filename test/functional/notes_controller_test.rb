@@ -18,7 +18,6 @@ class NotesControllerTest < ActionController::TestCase
     assert_response :success
     assert_not_nil assigns(:notes)
     assert_not_nil assigns(:cnt_pages)
-    #TODO: test pagination
   end
 
   test "should get new" do
@@ -46,7 +45,6 @@ class NotesControllerTest < ActionController::TestCase
     assert_redirected_to notes_path
     assert_equal "note successfully created!", flash[:notice]
 
-    #TODO: update test
 
     note_id = Note.find_one["_id"].to_s
     assert_difference('Note.count', -1) do
@@ -62,7 +60,6 @@ class NotesControllerTest < ActionController::TestCase
       post :create, note_params
     end
     assert_redirected_to new_note_path
-    #TODO: assert_template "new"
     assert_not_nil flash[:error]
   end
 

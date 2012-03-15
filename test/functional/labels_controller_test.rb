@@ -55,10 +55,6 @@ class LabelsControllerTest < ActionController::TestCase
 
     label_new = {label: {name: "label9", comment: "label9 of note1 for controller test"}, note_id: @note_id, id: @label_id}
     put :update, label_new
-    #TODO: label_new_db = Note.findxxx
-    #TODO: assert_equal label_new[:label][:name], label_new_db[:label][:name]
-    #TODO: assert_equal label_new[:label][:comment], label_new_db[:label][:comment]
-    #TODO: test update
     assert_equal "label successfully updated!", flash[:notice]
 
     assert_difference('Note.find_one({_id: BSON::ObjectId(@note_id)})["labels"].count', -1) do
@@ -74,15 +70,12 @@ class LabelsControllerTest < ActionController::TestCase
       post :create, label_params
     end
     assert_redirected_to new_note_label_path(@note_id)
-    #TODO: assert template new
     assert_not_nil flash[:error]
   end
 
   test "update label info need essential fields" do
     label_params = {label: {name: "", comment: "label4 of note1 for controller test"}, note_id: @note_id, id: @label_id}
     put :update, label_params
-    #TODO: label_db = Note.find_one_label(@label_id)
-    #TODO: assert_not_equal label_params[:comment], label_db[:comment]
     assert_equal "label update failed!", flash[:error]
     assert_redirected_to edit_note_label_path(@note_id)
 

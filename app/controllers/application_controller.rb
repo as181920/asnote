@@ -23,13 +23,14 @@ class ApplicationController < ActionController::Base
     user["_id"].to_s if user
   end
 
-  #TODO: 其余note的权限类型
   def if_record_write?(note_id, id)
     note = Note.find_one(_id: BSON::ObjectId(note_id))
     record = Record.find_one(_id: BSON::ObjectId(id))
     return true if note["permission"] == "public_team"
+    return true if (["public_tp","public_personal"].include? note["permission"]) and current_user and (record["uid"].to_s == current_user)
     return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
-    return true if current_user and record["uid"].to_s == current_user
+    return true if (["private_team"]).include?(note["permission"]) and current_user and note["users"].include?(BSON::ObjectId(current_user))
+    return true if (["private_tp","private_personal"]).include?(note["permission"]) and current_user and note["users"].include?(BSON::ObjectId(current_user)) and (record["uid"].to_s == current_user)
     false
   end
 

@@ -18,7 +18,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal User.find_one({_id: user})["email"], user1_attr[:email]
     assert User.authenticate(user1_attr[:email], password_test), "the user created should pass authentication use it's password"
     assert_nil User.authenticate(user1_attr[:email], "wrong_password"), "the user shouldn't pass authentication with wrong password"
-    #TODO: update,delete
   end
 
   test "create user when email not presence" do

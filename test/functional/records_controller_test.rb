@@ -25,7 +25,6 @@ class RecordsControllerTest < ActionController::TestCase
     assert_not_equal assigns(:note), Mongo::Cursor
     assert_not_nil assigns(:records)
     assert_not_nil assigns(:cnt_pages)
-    #TODO: test pagination
   end
 
   test "should get new" do
@@ -64,8 +63,6 @@ class RecordsControllerTest < ActionController::TestCase
 
     record_new={record: {@label_id1=>"contentx", @label_id2=>"contentx中文字符"}, note_id: @note_id, id: @record_id}
     put :update, record_new
-    #TODO: record_new_db = Record.findxxx
-    #TODO: assert_equal record attr in var and db
     assert_equal "record successfully updated!", flash[:notice]
 
     assert_difference('Record.find({nid: BSON::ObjectId(@note_id)}).count', -1) do

@@ -1,6 +1,6 @@
 # encoding: utf-8
 class LabelsController < ApplicationController
-  #TODO: p3列权限的真实权限控制
+  #TODO: p2列权限的真实权限控制
   before_filter :label_read?, only: [:index, :show]
   before_filter :label_write?, only: [:new, :create, :edit, :update, :destroy]
 
@@ -32,6 +32,7 @@ class LabelsController < ApplicationController
     redirect_to :back
   end
 
+  #TODO: p4优化新建列时指定列owner的方式，通过邮件增加验证，参考增加表用户的方式
   def new
     @note_id = params[:note_id]
     @note_name = Note.find_one({_id: BSON::ObjectId(@note_id)})["name"]

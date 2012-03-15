@@ -28,7 +28,7 @@ end
 private
 def validate_save_record(record)
   err_msg=[]
-  #TODO: validation of record when create and update
+  #TODO: p9validation of record when create and update
   #if record[:name] == "" or record[:name] == nil
   #  err_msg << "名称不能为空"
   #end
