@@ -1,6 +1,7 @@
 # encoding: utf-8
 class NotesController < ApplicationController
-  #TODO: 表权限类型修改后，原来的权限出了代码是否都ok？
+  #TODO: p1个类型表权限的实现和优化，
+  #TODO: p3表权限类型修改后，原来的权限出了代码是否都ok？
   before_filter :if_login?, only: [:new, :create]
   before_filter :note_read?, only: [:show]
   before_filter :note_write?, except: [:index, :show, :new, :create]

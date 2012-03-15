@@ -1,6 +1,6 @@
 # encoding: utf-8
 class LabelsController < ApplicationController
-  #TODO: 列权限的真实权限控制
+  #TODO: p3列权限的真实权限控制
   before_filter :label_read?, only: [:index, :show]
   before_filter :label_write?, only: [:new, :create, :edit, :update, :destroy]
 
@@ -98,8 +98,8 @@ class LabelsController < ApplicationController
     note_id = request.path.split("/")[2]
     #id = request.path.split("/")[4]
     note = Note.find_one(_id: BSON::ObjectId(note_id))
-    return true if current_user and note["owners"].include? BSON::ObjectId(current_user)
-    flash[:error] = "暂时没有权限编辑该表的列信息"
+    return true if note and current_user and note["owners"].include? BSON::ObjectId(current_user)
+    flash[:error] = "暂时没有权限编辑该表的列信息，或其它异常"
     redirect_to :back rescue redirect_to note_path(note_id)
   end
 end
