@@ -4,7 +4,7 @@
   <% when "String", "Number", "Time" %>
     <%= text_field_tag("record[#{label['lid']}]", @record[label['lid'].to_s] || label["default"] ) %>
   <% when "Date" %>
-    <%= datepicker_input "record[#{label['lid']}]", "", {dateFormat: 'yy-mm-dd', value: (date=@record[label['lid'].to_s]).nil? ? (label["default"] || Date.today.strftime) : date[0]} %>
+    <%= datepicker_input "record[#{label['lid']}]", "", {dateFormat: 'yy-mm-dd', value: (date=@record[label['lid'].to_s]).nil? ? ((label["default"] unless label["default"].to_s.empty?) || Date.today.strftime) : date[0]} %>
   <% when "Select" %>
     <%= select_tag("record[#{label['lid']}]", options_for_select(label["select"].to_s.split.to_a, @record[label['lid'].to_s] || label["default"] )) %>
   <% else %>
