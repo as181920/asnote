@@ -32,6 +32,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @id = params[:id]
+    @user = User.find_one(_id: BSON::ObjectId(@id))
   end
 
   def follow_note

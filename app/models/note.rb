@@ -74,6 +74,22 @@ def Note.readable_labels(note, current_user)
   labels = labels_pre.sort_by {|l| l["pos"] }
 end
 
+def Note.create_owner(note_id,user_email)
+  val = validate_user(user_email); return val unless val[:uid]
+
+  user_id = val[:uid]
+  Note.update({_id: BSON::ObjectId(note_id)}, {'$addToSet'=>{owners: BSON::ObjectId(user_id)}})
+  return {uid: user_id, message: "表所有者添加成功!"}
+end
+
+def Note.create_user(note_id,user_email)
+  val = validate_user(user_email); return val unless val[:uid]
+
+  user_id = val[:uid]
+  Note.update({_id: BSON::ObjectId(note_id)}, {'$addToSet'=>{users: BSON::ObjectId(user_id)}})
+  return {uid: user_id, message: "表普通用户添加成功!"}
+end
+
 private
 def validate_note(note)
   #TODO: 系统保留不能存入（_开头的名称）
@@ -97,5 +113,14 @@ def validate_note_label(label)
     err_msg << "名称不能为空"
   end
   err_msg.empty? ? {lid: true, message: "no error"} : {lid: nil, message: err_msg}
+end
+
+def validate_user(email)
+  err_msg=[]
+  user = User.find_one(email: email)
+  unless user
+    err_msg << "该用户不存在或者无效"
+  end
+  err_msg.empty? ? {uid: user["_id"].to_s, message: "no error"} : {uid: nil, message: err_msg}
 end
 

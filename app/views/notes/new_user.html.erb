@@ -1,0 +1,10 @@
+<BR/>
+<b><%= link_to @note_name, note_records_path(@id) %>: </b>创建普通用户...
+<BR/>
+<BR/>
+<%= form_tag add_user_note_path do %>
+  <%= label_tag("user[email]", "email") %> <%= text_field_tag("user[email]","") %>
+  <br/>
+  <%= submit_tag("new") %>
+<% end %>
+

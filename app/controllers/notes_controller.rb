@@ -1,8 +1,9 @@
 # encoding: utf-8
 class NotesController < ApplicationController
+  #TODO: 表权限类型修改后，原来的权限出了代码是否都ok？
   before_filter :if_login?, only: [:new, :create]
   before_filter :note_read?, only: [:show]
-  before_filter :note_write?, only: [:edit, :update, :destroy]
+  before_filter :note_write?, except: [:index, :show, :new, :create]
 
   def index
     @notes = Note.find(permission: {'$nin'=>["private_owner","private_team","private_tp","private_personal"]}, deleted: {'$ne'=>1}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
@@ -51,6 +52,42 @@ class NotesController < ApplicationController
     else
       flash[:error] = "delete note failed!"
       redirect_to notes_path
+    end
+  end
+
+  def new_owner
+    @id = params[:id]
+    @note = Note.find_one({_id: BSON::ObjectId(@id)})
+    @note_name = @note["name"]
+  end
+
+  def add_owner
+    @id = params[:id]
+    @email = params[:user][:email]
+    owner = Note.create_owner(@id, @email)
+    if owner[:uid]
+      redirect_to note_path(@id), notice: owner[:message]
+    else
+      flash[:error] = owner[:message]
+      redirect_to new_owner_note_path(@id)
+    end
+  end
+
+  def new_user
+    @id = params[:id]
+    @note = Note.find_one({_id: BSON::ObjectId(@id)})
+    @note_name = @note["name"]
+  end
+
+  def add_user
+    @id = params[:id]
+    @email = params[:user][:email]
+    user = Note.create_user(@id, @email)
+    if user[:uid]
+      redirect_to note_path(@id), notice: user[:message]
+    else
+      flash[:error] = user[:message]
+      redirect_to new_user_note_path(@id)
     end
   end
 

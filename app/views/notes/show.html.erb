@@ -8,11 +8,11 @@
 <p> <strong>最后更新时间：</strong><%= @note["updated_at"].localtime %> </p>
 <p> <strong>该表所有者：</strong><BR/>
 <% @note["owners"].each do |uid| %>
-  <%= link_to User.find_one(_id: uid)["email"], user_path(uid) %> &nbsp;
+  <%= link_to User.find_one(_id: uid)["email"], user_path(uid) %>(delete) &nbsp;
 <% end %>
 </p>
 <p> <strong>该表普通用户：</strong><BR/>
 <% @note["users"].to_a.each do |uid| %>
-  <%= link_to User.find_one(_id: uid)["email"], user_path(uid) %> &nbsp;
+  <%= link_to User.find_one(_id: uid)["email"], user_path(uid) %>(delete) &nbsp;
 <% end %>
 

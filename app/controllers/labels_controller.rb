@@ -1,5 +1,6 @@
 # encoding: utf-8
 class LabelsController < ApplicationController
+  #TODO: 列权限的真实权限控制
   before_filter :label_read?, only: [:index, :show]
   before_filter :label_write?, only: [:new, :create, :edit, :update, :destroy]
 

@@ -37,9 +37,9 @@ module ApplicationHelper
       if if_note_write?(id)
         menu += "<a href=#{edit_note_path(id)}>编辑表信息</a>&nbsp;&nbsp;"
         #TODO: **********************finish it now
-        menu += "<a href=#{edit_note_path(id)}>添加该表所有者</a>&nbsp;&nbsp;"
-        menu += "<a href=#{edit_note_path(id)}>添加该表普通用户</a>&nbsp;&nbsp;" if if_note_private?(id)
-        menu += "<a  rel='nofollow' data-method='delete' href=#{note_path(id)}>删除表</a>&nbsp;&nbsp;"
+        menu += "<a href=#{new_owner_note_path(id)}>添加该表所有者</a>&nbsp;&nbsp;"
+        menu += "<a href=#{new_user_note_path(id)}>添加该表普通用户</a>&nbsp;&nbsp;" if if_note_private?(id)
+        menu += "<a  rel='nofollow' data-method='delete' data-confirm='不可找回，确认删除？' href=#{note_path(id)}>删除表</a>&nbsp;&nbsp;"
       end
       menu += "<a href=#{note_records_path(id)}>表数据页</a>"
       menu += "&nbsp;&nbsp;<a href=#{note_labels_path(id)}>表的列信息</a>"
@@ -76,7 +76,7 @@ module ApplicationHelper
 
       menu += "<a href=#{note_records_path(note_id)}>返回表</a>"
       menu += "&nbsp;&nbsp;<a href=#{edit_note_record_path(note_id)}>编辑记录</a>"
-      menu += "&nbsp;&nbsp;<a data-method='delete' href=#{note_record_path(note_id, id)}>删除记录</a>"
+      menu += "&nbsp;&nbsp;<a data-method='delete' data-confirm='不可找回，确认删除？' href=#{note_record_path(note_id, id)}>删除记录</a>"
     when note_labels_path
       id = request.path.split("/")[2]
 
@@ -92,7 +92,7 @@ module ApplicationHelper
       menu += "<a href=#{note_records_path(note_id)}>返回表</a>"
       if if_label_write?(note_id, id)
         menu += "&nbsp;&nbsp;<a href=#{edit_note_label_path(note_id, id)}>编辑列信息</a>"
-        menu += "&nbsp;&nbsp;<a data-method='delete' href=#{note_label_path(note_id, id)}>删除列</a>"
+        menu += "&nbsp;&nbsp;<a data-method='delete' data-confirm='不可找回，确认删除？' href=#{note_label_path(note_id, id)}>删除列</a>"
       end
     when new_note_label_path
       note_id = request.path.split("/")[2]
