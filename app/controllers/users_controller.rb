@@ -48,7 +48,7 @@ class UsersController < ApplicationController
 
   def following_notes
     @notes = []
-    User.find_one(_id: BSON::ObjectId(params[:id]))["fnotes"].each {|id| @notes << Note.find_one(_id: id)}
+    User.find_one(_id: BSON::ObjectId(params[:id]))["fnotes"].to_a.each {|id| @notes << Note.find_one(_id: id)}
   end
 
   def follow
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
 
   def following
     @users = []
-    User.find_one(_id: BSON::ObjectId(params[:id]))["fusers"].each {|id| @users << User.find_one(_id: id)}
+    User.find_one(_id: BSON::ObjectId(params[:id]))["fusers"].to_a.each {|id| @users << User.find_one(_id: id)}
     #@user_ids = User.find_one(_id: BSON::ObjectId(params[:id]))["fusers"]
     #@user_ids.each {|id| @users << User.find_one(_id: id)}
   end
