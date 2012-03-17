@@ -1,4 +1,6 @@
+# encoding: utf-8
 class UsersController < ApplicationController
+  #TODO: p1权限控制还没有
 
   def home
     #@notes = Note.find(owners: BSON::ObjectId(params[:id])).page(params[:page].to_i)
@@ -25,10 +27,55 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @id = params[:id]
+    @user = User.find_one({_id: BSON::ObjectId(@id)})
+    @user_email = @user["email"]
   end
 
   def update
-      redirect_to users_path, notice: 'user information updated!'
+    @id = params[:id]
+    redirect_to users_path, notice: 'user information updated!'
+  end
+
+  def edit_password
+    @id = params[:id]
+    @user = User.find_one({_id: BSON::ObjectId(@id)})
+    @user_email = @user["email"]
+  end
+
+  def update_password
+    @id = params[:id]
+    user = User.find_one(_id: BSON::ObjectId(@id))
+
+    result = User.update_password(user, params[:user][:old_password], params[:user][:new_password], params[:user][:new_password_confirmation])
+    if result[:status]
+      redirect_to user_path(@id), notice: result[:message]
+    else
+      flash[:error] = result[:message]
+      redirect_to user_path(@id)
+    end
+  end
+
+  def edit_email
+    @id = params[:id]
+    @user = User.find_one({_id: BSON::ObjectId(@id)})
+    @user_email = @user["email"]
+  end
+  
+  def update_email
+    @id = params[:id]
+    user = User.find_one(_id: BSON::ObjectId(@id))
+  
+    result = User.update_email(user, params[:user][:email], params[:user][:password])
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    puts result
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    if result[:status]
+      redirect_to user_path(@id), notice: result[:message]
+    else
+      flash[:error] = result[:message]
+      redirect_to user_path(@id)
+    end
   end
 
   def show

@@ -1,0 +1,16 @@
+<BR/>
+<b>用户ID：</b><%= @user["_id"] %>
+<BR/>
+<BR/>
+<b>当前邮件地址：</b><%= @user["email"] %>
+<BR/>
+<BR/>
+<%= form_tag update_email_user_path(current_user) do %>
+  <%= label_tag("user[password]", "当前密码") %><%= password_field_tag("user[password]", "") %>
+  <BR/>
+  <%= label_tag("user[email]", "新邮件地址") %><%= text_field_tag("user[email]", "") %>
+
+  <BR/>
+  <%= submit_tag("更新") %>
+<% end %>
+

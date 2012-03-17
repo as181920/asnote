@@ -1,3 +1,15 @@
-show...
-<%= debug(@id) %>
-<%= debug(@user) %>
+<BR/>
+<b>用户信息:</b>
+<BR/>
+<BR/>
+<b>用户ID：</b><%= @user["_id"] %>
+<BR/>
+<BR/>
+<b>邮件地址：</b><%= @user["email"] %>
+<BR/>
+<BR/>
+<b>创建时间：</b><%= @user["created_at"] %>
+<BR/>
+<BR/>
+<b>更新时间：</b><%= @user["updated_at"] %>
+<BR/>

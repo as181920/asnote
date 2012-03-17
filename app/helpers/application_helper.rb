@@ -10,6 +10,15 @@ module ApplicationHelper
       end
       menu += "<a href=#{notes_path}>所有表</a>"
       menu += "&nbsp;&nbsp;<a href=#{users_path}>所有用户</a>"
+    when user_path
+      user_id=request.path.split("/")[2]
+
+      menu = ""
+      menu += "<a href=#{home_user_path()}>用户的表应用</a>"
+      if user_id == current_user
+        menu += "&nbsp;&nbsp;<a href=#{edit_password_user_path(current_user)}>修改密码</a>"
+        menu += "&nbsp;&nbsp;<a href=#{edit_email_user_path(current_user)}>修改邮件地址</a>"
+      end
     when home_user_path
       user_id=request.path.split("/")[2]
 
@@ -109,8 +118,8 @@ module ApplicationHelper
     if current_user
       menu += "<a href=#{home_user_path(current_user)}>#{current_user_email}</a><BR/>"
       menu += "<div class='user_menu'>"
-      menu += "<a href=#{edit_user_path(current_user)}>Setting</a><BR/>"
-      menu += "<a href=#{logout_path}>Logout</a><BR/>"
+      menu += "<a href=#{user_path(current_user)}>个人信息</a><BR/>"
+      menu += "<a href=#{logout_path}>退出</a><BR/>"
       menu += "</div>"
     else
       menu += "<a href=#{login_path}>Login</a>"

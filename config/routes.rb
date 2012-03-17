@@ -32,6 +32,10 @@ Asnote::Application.routes.draw do
       post :unfollow
       post :follow_note
       post :unfollow_note
+      get :edit_password
+      post :update_password
+      get :edit_email
+      post :update_email
     end
   end
   get "sign_up"=>"users#new", as: "sign_up"
