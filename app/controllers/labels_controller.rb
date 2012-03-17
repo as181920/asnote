@@ -7,12 +7,12 @@ class LabelsController < ApplicationController
   def index
     @note_id = params[:note_id]
     @note = Note.find_one({_id: BSON::ObjectId(@note_id)})
-    @max_pos = ((Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].sort_by {|l| l["pos"]}).last)["pos"] 
+    @max_pos = ((Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["deleted"]!=1}.sort_by {|l| l["pos"]}).last)["pos"] 
     @labels = Note.readable_labels(@note, current_user)
   end
 
   def sort
-    @max_pos = ((Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].sort_by {|l| l["pos"]}).last)["pos"] 
+    @max_pos = ((Note.find_one(_id: BSON::ObjectId(params[:note_id]))["labels"].find{|label| label["deleted"]!=1}.sort_by {|l| l["pos"]}).last)["pos"] 
     case params["label"]["mv_pos"]
     when "up"
       if params["label"]["c_pos"].to_i > 0
