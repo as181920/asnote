@@ -19,8 +19,8 @@ class RecordsController < ApplicationController
       @cnt_records = Record.find({nid: BSON::ObjectId(@note_id)}).count
       @cnt_pages=(@cnt_records.to_f / 10).ceil
     when "mine"
-      @records = Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).sort([["updated_at", "descending"]]).page(params[:page].to_i)
-      @cnt_records=Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).count
+      @records = current_user ? Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).sort([["updated_at", "descending"]]).page(params[:page].to_i) : {}
+      @cnt_records = current_user ? Record.find({nid: BSON::ObjectId(@note_id), uid: BSON::ObjectId(current_user)}).count : 0
       @cnt_pages=(@cnt_records.to_f / 10).ceil
     else
       flash[:error] = "目前没有权限查看该表数据"
