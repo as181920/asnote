@@ -58,9 +58,14 @@ class RecordsController < ApplicationController
 
   def update
     @note_id = params[:note_id]
-    record = Record.update_one(params[:id], params[:record])
+    @id = params[:id]
+    record = Record.update_one(@id, params[:record])
     if record[:objid]
-      redirect_to note_records_path(@note_id), notice: record[:message]
+      if params[:commit] == "保存并继续编辑"
+        redirect_to edit_note_record_path(@note_id,@id), notice: record[:message]
+      else
+        redirect_to note_records_path(@note_id), notice: record[:message]
+      end
     else
       flash[:error] = "record update failed!"
       redirect_to :back

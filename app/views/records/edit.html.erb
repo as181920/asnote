@@ -4,5 +4,5 @@
 <%= form_tag note_record_path(@note_id, @id), method: "put" do %>
   <%= render "record_form" %>
 
-  <%= submit_tag("更新") %>
+  <%= submit_tag "更新" %>&nbsp;&nbsp;&nbsp;&nbsp;<%= submit_tag "保存并继续编辑" %>
 <% end %>
