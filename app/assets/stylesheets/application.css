@@ -29,6 +29,10 @@ form {
   display: inline;
 }
 
+textarea {
+  width: 500px;
+  height: 80px;
+}
 #container {
   position: relative;
   text-align: center;
