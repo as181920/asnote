@@ -1,6 +1,7 @@
 <BR/>
 <b><%= link_to "表的详细信息:", note_path(@id) %></b><BR/>
 <BR/>
+<p> <strong>ID：</strong> <%= @note["_id"] %> </p>
 <p> <strong>名称：</strong> <%= link_to @note["name"], note_records_path(@id) %> </p>
 <p> <strong>详细描述：</strong><br/><%= @note["comment"] %> </p>
 <p> <strong>权限类型：</strong><%= @note["permission"] %> </p>
