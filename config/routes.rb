@@ -45,6 +45,7 @@ Asnote::Application.routes.draw do
   get "welcome/contributor"=>"welcome#contributor"
   root to: 'welcome#index'
                                                                                                          
+  resources :astests
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

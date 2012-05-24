@@ -15,10 +15,10 @@
     <% @records.each do |record| %>
       <tr>
         <td>
-          <%= link_to "show", note_record_path(@note_id, record["_id"]) %>
+          <%= link_to "s", note_record_path(@note_id, record["_id"]) %> &nbsp;
           <% if if_record_write?(@note_id, record["_id"].to_s) %>
-            | <%= link_to "edit", edit_note_record_path(@note_id, record["_id"]) %>
-            | <%= link_to "destroy", note_record_path(@note_id, record["_id"]), method: "delete", confirm: "不可找回，确认删除？" %>
+            <%= link_to "e", edit_note_record_path(@note_id, record["_id"]) %> &nbsp;
+            <%= link_to "d", note_record_path(@note_id, record["_id"]), method: "delete", confirm: "不可找回，确认删除？" %>
           <% end %>
         </td>
         <% @labels.each do |label| %>

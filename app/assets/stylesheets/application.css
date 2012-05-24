@@ -87,6 +87,9 @@ textarea {
   vertical-align: middle;
   height: 18px;
 }
+#footer_detail_msg {
+  float: left
+}
 
 #footer a:link {
   color: #949494;
