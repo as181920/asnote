@@ -15,7 +15,7 @@ $(document).ready ->
     str
 
   xy=[3,4]
-  [start_x,start_y,spacing_x,spacing_y,length_x,length_y,flg_changed] = [120,60,120,120,80,80,0]
+  [start_x,start_y,spacing_x,spacing_y,length_x,length_y] = [120,60,120,120,80,80]
   locations = {}
   zindex=0
   $("#content").css({"height":"550px"})
@@ -38,6 +38,7 @@ $(document).ready ->
         if x <= (xy[0]-cnt_demand_consistent)
           col_set = (locs[[x+i,y]].color for i in [0..cnt_demand_consistent-1])
           if col_set.unique().length == 1
+            #alert col_set
             cnt_color_consistent+=1
             skip_start = x
             skip_step  = cnt_color_consistent
@@ -59,8 +60,9 @@ $(document).ready ->
             #alert [locs[[x,y]].color,locs[[x,y+1]].color,locs[[x,y+2]].color]
     #alert cnt_color_consistent
     if cnt_color_consistent >= parseInt(xy[0]*xy[1]/cnt_demand_consistent)
-      alert "you are awesome!"
-    false
+      true
+    else
+      false
 
   for y in [0..xy[1]-1]
     for x in [0..xy[0]-1]
@@ -69,10 +71,10 @@ $(document).ready ->
       loc_top  = start_y+spacing_y*y
       temp_colors=[]
       [temp_colors[0],temp_colors[1],temp_colors[2],temp_colors[3]]=["red","blue","black","yellow"]
-      $("#content_main").append "<div id=#{loc_id} class='ui-widget-content'> <p>#{x+','+y}</p> </div>"
+      $("#content_main").append "<div id=#{loc_id} class=#{temp_colors[y]}> <p>#{x+','+y}</p> </div>"
       $("##{loc_id}").css({"width":"#{length_x}px","height":"#{length_y}px","padding":"0.5em","float":"left","background-color":temp_colors[y],"z-index":"1"})
       $("##{loc_id}").offset({"left":loc_left,"top":loc_top})
-      locations[[x,y]] = {id:x+"_"+y,loc:$("##{loc_id}").offset(),color:y}
+      locations[[x,y]] = {id:x+"_"+y,loc:$("##{loc_id}").offset(),color:$("##{loc_id}").attr("class")}
       $("##{loc_id}").draggable
         drag: (event,ui) ->
           $(this).css({"cursor":"move","z-index":zindex+=1})
@@ -88,9 +90,11 @@ $(document).ready ->
             $("##{locations[current_loc_key].id}").offset(locations[moved_loc_key].loc)
             $(this).offset(locations[current_loc_key].loc)
             [locations[current_loc_key].id,locations[moved_loc_key].id] = [@id,locations[current_loc_key].id]
+            [locations[current_loc_key].color,locations[moved_loc_key].color] = [locations[moved_loc_key].color,locations[current_loc_key].color]
             if game_finished(locations)
-              alert "xxx"
+              alert "you are awesome!"
             else
+              #alert "try again"
           else
             $(this).offset(locations[moved_loc_key].loc)
 
