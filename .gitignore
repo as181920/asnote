@@ -13,6 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+*.bak
 
 # Ignore all swap files
 .*.swp

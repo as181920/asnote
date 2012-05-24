@@ -14,11 +14,11 @@ $(document).ready ->
           str += prop + ":" + typeof(obj[prop]) + "\n"
     str
 
-  xy=[3,4]
+  xy=[5,5]
   [start_x,start_y,spacing_x,spacing_y,length_x,length_y] = [120,60,120,120,80,80]
   locations = {}
   zindex=0
-  $("#content").css({"height":"550px"})
+  $("#content").css({"height":"600px"})
 
   find_locations_key_by_id = (id,locs) ->
     result = []
@@ -27,7 +27,7 @@ $(document).ready ->
     result
 
   game_finished = (locs) ->
-    cnt_demand_consistent = 3
+    cnt_demand_consistent = 5
     cnt_color_consistent = 0
     skip_start = 0
     skip_step = 0
@@ -70,7 +70,7 @@ $(document).ready ->
       loc_left = start_x+spacing_x*x
       loc_top  = start_y+spacing_y*y
       temp_colors=[]
-      [temp_colors[0],temp_colors[1],temp_colors[2],temp_colors[3]]=["red","blue","black","yellow"]
+      [temp_colors[0],temp_colors[1],temp_colors[2],temp_colors[3],temp_colors[4]]=["red","blue","black","yellow","gray"]
       $("#content_main").append "<div id=#{loc_id} class=#{temp_colors[y]}> <p>#{x+','+y}</p> </div>"
       $("##{loc_id}").css({"width":"#{length_x}px","height":"#{length_y}px","padding":"0.5em","float":"left","background-color":temp_colors[y],"z-index":"1"})
       $("##{loc_id}").offset({"left":loc_left,"top":loc_top})
@@ -87,8 +87,13 @@ $(document).ready ->
           current_loc_key = current_loc_x+","+current_loc_y
           moved_loc_key  = find_locations_key_by_id @id,locations
           if current_loc_x >=0 and current_loc_x < xy[0] and current_loc_y >=0 and current_loc_y < xy[1] and moved_loc_key!=current_loc_key
+            $("##{locations[current_loc_key].id}").fadeOut()
             $("##{locations[current_loc_key].id}").offset(locations[moved_loc_key].loc)
+            $("##{locations[current_loc_key].id}").fadeIn()
+            $(this).fadeOut()
             $(this).offset(locations[current_loc_key].loc)
+            $(this).fadeIn()
+            #$(this).animate({opacity: 0.25})
             [locations[current_loc_key].id,locations[moved_loc_key].id] = [@id,locations[current_loc_key].id]
             [locations[current_loc_key].color,locations[moved_loc_key].color] = [locations[moved_loc_key].color,locations[current_loc_key].color]
             if game_finished(locations)
