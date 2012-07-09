@@ -27,6 +27,11 @@ end
 
 group :development, :test do
   gem 'ruby-prof', :git => 'git://github.com/wycats/ruby-prof.git'
+  # To use debugger
+  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+  gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+  #gem 'ruby-debug19'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 # To use ActiveModel has_secure_password
@@ -41,5 +46,3 @@ gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
