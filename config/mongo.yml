@@ -4,13 +4,13 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: asnote-development
+  database: asnote_development
 
 test:
   <<: *defaults
-  database: asnote-test
+  database: asnote_test
 
 production:
   <<: *defaults
-  database: asnote-development
+  database: asnote_development
   #database: asnote-production
