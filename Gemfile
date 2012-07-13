@@ -2,6 +2,7 @@
 source 'http://ruby.taobao.org'
 
 gem 'rails', '3.2.0.rc2'
+gem 'thin'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -27,7 +28,21 @@ end
 
 group :development, :test do
   gem 'ruby-prof', :git => 'git://github.com/wycats/ruby-prof.git'
+  gem 'linecache19', '0.5.13'
+  gem 'ruby-debug-base19', '0.11.26'
+  gem 'ruby-debug19', :require => 'ruby-debug'
+
+  #curl -OL http://rubyforge.org/frs/download.php/75414/linecache19-0.5.13.gem
+  #curl -OL http://rubyforge.org/frs/download.php/75415/ruby-debug-base19-0.11.26.gem
+  #gem install linecache19-0.5.13.gem -- --with-ruby-include="${MY_RUBY_HOME/rubies/src}"
+  #gem install ruby-debug-base19-0.11.26 -- --with-ruby-include="${MY_RUBY_HOME/rubies/src}"
+
+  #other case
+  #gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+  #gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+  #gem 'ruby-debug19'
 end
+
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
