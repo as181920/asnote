@@ -2,6 +2,7 @@
 module ApplicationHelper
   def header_menu
     menu = ""
+=begin
     case request.path
     when root_path
       menu += "<a href=#{notes_path}>所有表</a>"
@@ -110,6 +111,7 @@ module ApplicationHelper
       menu += "&nbsp;&nbsp;<a href=#{note_labels_path(note_id)}>返回表</a>"
     else
     end
+=end
     menu
   end
 

@@ -27,7 +27,8 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'ruby-prof', :git => 'git://github.com/wycats/ruby-prof.git'
+  gem 'ruby-prof'
+  #gem 'ruby-prof', :git => 'git://github.com/wycats/ruby-prof.git'
   gem 'linecache19', '0.5.13'
   gem 'ruby-debug-base19', '0.11.26'
   gem 'ruby-debug19', :require => 'ruby-debug'
@@ -56,3 +57,5 @@ gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
 # Deploy with Capistrano
 # gem 'capistrano'
 
+gem "ckeditor", "3.7.1"
+gem 'sanitize'

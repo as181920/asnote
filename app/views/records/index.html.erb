@@ -1,3 +1,7 @@
+<% content_for :menu do %>
+  <%=link_to "添加", new_note_record_path(@note_id)%>
+<% end %>
+
 <div>
   <br/>
   <b><%= link_to @note["name"], note_records_path(@note_id) %><div class="count">(<%= @cnt_records %>)</div>---Records: </b>
@@ -22,7 +26,9 @@
           <% end %>
         </td>
         <% @labels.each do |label| %>
-          <td><pre><%= record[label["lid"].to_s] %></pre></td>
+          <td>
+            <%= render partial: "record_item", locals: {item: record[label["lid"].to_s], format: label["format"]} %>
+          </td>
         <% end %>
       </tr>
     <% end %>

@@ -1,9 +1,3 @@
-GIT
-  remote: git://github.com/wycats/ruby-prof.git
-  revision: ffae61a895531f9601dd302a3eb0abc58c2a5473
-  specs:
-    ruby-prof (0.11.0)
-
 GEM
   remote: http://ruby.taobao.org/
   specs:
@@ -41,6 +35,9 @@ GEM
     bson_ext (1.6.4)
       bson (~> 1.6.4)
     builder (3.0.0)
+    ckeditor (3.7.1)
+      mime-types
+      orm_adapter
     coffee-rails (3.2.1)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0.beta)
@@ -72,6 +69,8 @@ GEM
     mongo (1.6.4)
       bson (~> 1.6.4)
     multi_json (1.3.6)
+    nokogiri (1.5.5)
+    orm_adapter (0.4.0)
     polyglot (0.3.3)
     rack (1.4.1)
     rack-cache (1.2)
@@ -106,8 +105,11 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
+    ruby-prof (0.11.2)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
+    sanitize (2.0.3)
+      nokogiri (>= 1.4.4, < 1.6)
     sass (3.1.20)
     sass-rails (3.2.3)
       railties (~> 3.2.0.beta)
@@ -138,6 +140,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   bson
   bson_ext
+  ckeditor (= 3.7.1)
   coffee-rails (~> 3.2.0)
   jquery-rails
   jquery_datepicker
@@ -146,7 +149,8 @@ DEPENDENCIES
   rails (= 3.2.0.rc2)
   ruby-debug-base19 (= 0.11.26)
   ruby-debug19
-  ruby-prof!
+  ruby-prof
+  sanitize
   sass-rails (~> 3.2.3)
   thin
   uglifier (>= 1.0.3)

@@ -1,0 +1,12 @@
+<% case format %>
+<% when "RichText" %>
+  <!-- TODO: 显示格式恢复正常 -->
+  <%if Sanitize.clean(item)==item%>
+    <pre><%= item %></pre>
+  <%else%>
+    <%=raw item %>
+  <%end%>
+<% else %>
+ <pre><%= item %></pre>
+<% end %>
+
