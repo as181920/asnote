@@ -1,5 +1,7 @@
 ﻿CKEDITOR.editorConfig = function( config )
 {
+  //config.language = 'en';
+
   config.toolbar = 'Easy';
   
   config.toolbar_Easy =
