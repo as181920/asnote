@@ -7,7 +7,7 @@
   config.toolbar_Easy =
     [
         ['TextColor','BGColor','Bold','Strike','FontSize'],
-        ['NumberedList','BulletedList','Table','Link','Unlink'], 
+        ['NumberedList','BulletedList','Indent','Outdent','Table','Link','Unlink','Anchor'], 
         ['Source','Maximize'] 
     ];
 };
