@@ -59,3 +59,4 @@ gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
 
 gem "ckeditor", "3.7.1"
 gem 'sanitize'
+#gem 'as_user'
