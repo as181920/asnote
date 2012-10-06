@@ -20,6 +20,9 @@ Asnote::Application.routes.draw do
     end
 
     resources :records do
+      member do
+        get :filter
+      end
     end
   end
 

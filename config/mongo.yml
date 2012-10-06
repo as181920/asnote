@@ -12,5 +12,5 @@ test:
 
 production:
   <<: *defaults
-  database: asnote_development
-  #database: asnote_production
+  database: asnote_production
+  #database: asnote_development
