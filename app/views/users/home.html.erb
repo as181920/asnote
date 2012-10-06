@@ -1,11 +1,11 @@
-
 <br/>
-<b>home page:</b>
-<br/>
-My notes list:
-<ol>
+<div class='notes_list' style="<%=notes_list_style()%>">
   <% @notes.each do |note| %>
-    <li><%= link_to note["name"], note_records_path(note["_id"]) %></li>
-  <% end %>
-</ol>
 
+    <div class='note_item' id="<%=note['_id']%>" style="<%=note_style(note['_id'].to_s)%>">
+      <%=link_to raw(note["name"]), note_records_path(note["_id"]) %>
+    </div>
+  <% end %>
+</div>
+
+<%=javascript_tag "locate_note()"%>

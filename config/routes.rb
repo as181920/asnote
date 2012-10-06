@@ -6,39 +6,40 @@ Asnote::Application.routes.draw do
 
   resources :notes do
     member do
-      get :new_owner
-      post :add_owner
-      get :new_user
-      post :add_user
-      delete :delete_owner
-      delete :delete_user
+      get     :new_owner
+      post    :add_owner
+      get     :new_user
+      post    :add_user
+      delete  :delete_owner
+      delete  :delete_user
+      post    :locate
     end
     resources :labels do
       collection do
-        post :sort
+        post  :sort
       end
     end
 
     resources :records do
       member do
-        get :filter
+        get   :filter
       end
     end
   end
 
   resources :users do
     member do
-      get :home
-      get :following
-      get :following_notes
-      post :follow
-      post :unfollow
-      post :follow_note
-      post :unfollow_note
-      get :edit_password
-      post :update_password
-      get :edit_email
-      post :update_email
+      get     :home
+      get     :following
+      get     :following_notes
+      post    :follow
+      post    :unfollow
+      post    :follow_note
+      post    :unfollow_note
+      get     :edit_password
+      post    :update_password
+      get     :edit_email
+      post    :update_email
     end
   end
   get "sign_up"=>"users#new", as: "sign_up"
@@ -49,6 +50,9 @@ Asnote::Application.routes.draw do
   root to: 'welcome#index'
                                                                                                          
   resources :astests
+
+  mount Ckeditor::Engine => "/ckeditor"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -105,6 +109,4 @@ Asnote::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-
-  mount Ckeditor::Engine => "/ckeditor"
 end

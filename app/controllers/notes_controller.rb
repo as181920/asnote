@@ -114,6 +114,34 @@ class NotesController < ApplicationController
     end
   end
 
+  def locate
+    note_id = params[:id]
+    user_id = current_user
+    position_top = params["position_top"].to_i
+    position_left = params["position_left"].to_i
+    offset_top = params["offset_top"].to_i
+    offset_left = params["offset_left"].to_i
+    rel = Relation_UN.find_one(note_id: BSON::ObjectId(note_id),user_id: BSON::ObjectId(user_id))
+    if rel
+      Relation_UN.update({note_id: BSON::ObjectId(note_id),user_id: BSON::ObjectId(user_id)},{"$set"=>{offset: { top: offset_top,left: offset_left},position: {top: position_top,left: position_left}}})
+      #render text: "relocated!"
+    else
+      Relation_UN.insert(note_id: BSON::ObjectId(note_id), user_id: BSON::ObjectId(user_id), offset: {top: offset_top,left: offset_left}, position: {top: position_top,left: position_left})
+      #render text: "located!"
+    end
+
+    # 设定用户主页动态高度
+    #user = User.find_one(_id: BSON::ObjectId(user_id))
+    #if user and position_top>user["home_height"].to_i
+    highest_rel = Relation_UN.find(user_id: BSON::ObjectId(user_id)).sort({"position.top"=> -1}).first
+    if highest_rel and highest_rel["position"] and highest_rel["position"]["top"]
+      @height = highest_rel["position"]["top"].to_i
+      User.update({_id: BSON::ObjectId(user_id)},{"$set"=>{home_height: @height}})
+    end
+  rescue => exception
+    render text: "unlocated!"
+  end
+
   private
   def note_read?
     note_id = params[:id]

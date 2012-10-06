@@ -145,7 +145,7 @@ module ApplicationHelper
     end
     result
   end
-  
+
   def pagination(cnt_pages, params)
     result = ""
     result += "<div class='pagination'>"

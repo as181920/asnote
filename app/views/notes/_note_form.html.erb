@@ -1,6 +1,9 @@
-<%= label_tag("note[name]", "name") %> <%= text_field_tag("note[name]",@note["name"]) %>
+<%= label_tag("note[name]", "name") %>
+<%=cktext_area_tag "note[name]", @note["name"], {width: "530px",height: "55px"} %>
 <br/>
-<%= label_tag("note[comment]", "comment") %> <%= text_area_tag("note[comment]", @note["comment"]) %>
+<%= label_tag("note[comment]", "comment") %>
+<br/>
+<%= text_area_tag("note[comment]", @note["comment"]) %>
 <br/>
 <%= label_tag("note[permission]", "permission") %>
 <%= select_tag("note[permission]", options_for_select([["所有人可查看不可编辑","default"],["所有人可查看可编辑","public_team"],["所有人可查看表记录，只可编辑自己的记录","public_tp"],["所有人可查看可编辑自己的记录","public_personal"],["成为团队用户后可查看可编辑","private_team"],["成为参与用户后可查看表记录，只可编辑自己的记录","private_tp"],["成为个人用户后可查看可编辑自己的记录","private_personal"],["仅限表个人查看和使用，私密","private_owner"]], @note["permission"])) %>

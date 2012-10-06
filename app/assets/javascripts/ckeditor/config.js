@@ -11,4 +11,6 @@
 		['Source','Maximize'] 
 			];
 	config.toolbarStartupExpanded = false;
+  config.removePlugins = 'elementspath';
+  config.resize_enabled = true;
 };

@@ -1,10 +1,11 @@
 #source 'https://rubygems.org'
 source 'http://ruby.taobao.org'
 
-gem 'rails', '3.2.0.rc2'
-gem 'thin'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+# gem 'rails', '3.2.0.rc2'
+gem 'rails'
+gem 'thin'
 
 
 gem 'jquery-rails'

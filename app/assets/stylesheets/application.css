@@ -33,6 +33,11 @@ textarea {
   width: 833px;
   height: 222px;
 }
+
+a {
+  text-decoration: none;
+}
+
 #container {
   position: relative;
   text-align: center;
@@ -99,7 +104,7 @@ textarea {
   text-align: left;
   display: inline;
   vertical-align: middle;
-  margin-left: 20px;
+  margin-left: 10px;
   float: left;
   font-size: 23px;
 }
@@ -110,7 +115,7 @@ textarea {
 }
 
 #user {
-  margin-right: 20px;
+  margin-right: 10px;
   vertical-align: middle;
   float: right;
   font-size: 12px;
@@ -157,7 +162,8 @@ textarea {
   color: blue;
 }
 #content_main {
-  margin-left: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-bottom: 20px;
 }
 
