@@ -4,7 +4,7 @@
 
 <div>
   <br/>
-  <b><%= link_to @note["name"], note_records_path(@note_id) %><div class="count">(<%= @cnt_records %>)</div>---Records: </b>
+  <b><%= link_to Sanitize.clean(@note["name"]), note_records_path(@note_id) %><div class="count">(<%= @cnt_records %>)</div>---Records: </b>
   <%= raw pagination(@cnt_pages, params) %>
   <br/>
   <br/>
