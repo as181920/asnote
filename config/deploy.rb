@@ -17,7 +17,6 @@ set :scm, :git
 set :scm_username, 'git'
 
 set :branch, "master"
-set :user, 'andersen'
 set :use_sudo, false
 set :deploy_via, :remote_cache
 set :deploy_env, 'production'
