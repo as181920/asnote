@@ -29,7 +29,7 @@ set :deploy_to, "/home/#{user}/deployments/#{application}"
 
 # if you want to clean up old releases on each deploy uncomment this:
 
-set :keep_releases, 55
+set :keep_releases, 15
 after "deploy:restart", "deploy:cleanup"
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts
