@@ -1,6 +1,6 @@
 require "bundler/capistrano"
 
-#set :rvm_ruby_string ,  'ruby-1.9.3-p286@younoter' #这个值是你要用rvm的gemset。名字要和系统里有的要一样。
+set :rvm_ruby_string ,  'ruby-1.9.3-p286@younoter' #这个值是你要用rvm的gemset。名字要和系统里有的要一样。
 set :rvm_type ,  :user   # Don't use system-wide RVM
 require 'rvm/capistrano'
 
