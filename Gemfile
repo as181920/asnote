@@ -56,7 +56,8 @@ gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
+gem 'rvm-capistrano'
 
 gem "ckeditor", "3.7.1"
 gem 'sanitize'
