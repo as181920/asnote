@@ -4,8 +4,8 @@ set :rvm_ruby_string ,  'ruby-1.9.3-p286@younoter' #这个值是你要用rvm的g
 set :rvm_type ,  :user   # Don't use system-wide RVM
 require 'rvm/capistrano'
 
-set :stages, %w(vv online)
-set :default_stage, "online"
+set :stages, %w(vv production)
+set :default_stage, "production"
 require 'capistrano/ext/multistage'
 
 
