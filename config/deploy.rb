@@ -20,8 +20,9 @@ set :branch, "master"
 set :user, 'andersen'
 set :use_sudo, false
 set :deploy_via, :remote_cache
-set :deploy_env, 'production'
 set :deploy_to, "/home/#{user}/deployments/#{application}"
+set :deploy_env, 'production'
+set :rails_env, "production"
 #role :web, "your web-server here"                          # Your HTTP server, Apache/etc
 #role :app, "your app-server here"                          # This may be the same as your `Web` server
 #role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
