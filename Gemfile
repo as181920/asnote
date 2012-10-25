@@ -59,6 +59,6 @@ gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
 gem 'capistrano'
 gem 'rvm-capistrano'
 
-gem "ckeditor", "3.7.1"
+gem "ckeditor"
 gem 'sanitize'
 #gem 'as_user'
