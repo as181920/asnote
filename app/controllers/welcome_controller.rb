@@ -1,6 +1,11 @@
 class WelcomeController < ApplicationController
   def index
-    redirect_to home_user_path(current_user) if current_user
+    user = current_user || User.find_one(email: "admin@younoter.com")
+    if user
+      redirect_to home_user_path(user) 
+    else
+      redirect_to login_path
+    end
   end
 
   def about
