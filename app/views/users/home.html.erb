@@ -2,7 +2,7 @@
 <div class='notes_list' style="<%=notes_list_style()%>">
   <% @notes.each do |note| %>
 
-    <div class='note_item' id="<%=note['_id']%>" style="<%=note_style(note['_id'].to_s)%>">
+    <div class='note_item' id="<%=note['_id']%>" style="<%=note_style(note['_id'].to_s,params[:id])%>">
       <%=link_to raw(note["name"]), note_records_path(note["_id"]) %>
     </div>
   <% end %>
