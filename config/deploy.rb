@@ -46,7 +46,7 @@ end
 
 namespace :backup do
   task :local do
-    run "mongodump -d asnote_production -o ~/backup/dump && tar cjvf ~/backup/mongodump.tar.bz2 ~/backup/dump"
+    run "mongodump -d asnote_production -o ~/backup/dump"
   end
   task :bbtang do
     run "mongodump -d asnote_production -o ~/backup/dump && tar cjvf ~/backup/mongodump.tar.bz2 ~/backup/dump && scp -v ~/backup/mongodump.tar.bz2 andersen@bbtang.com:~/"
