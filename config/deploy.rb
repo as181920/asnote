@@ -53,6 +53,9 @@ namespace :backup do
   end
 end
 
-task :uname do
+task :status do
   run "uname -a"
+  run "df -h"
+  run "free -ml"
+  run "sensors"
 end
