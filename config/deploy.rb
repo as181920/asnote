@@ -55,7 +55,9 @@ end
 
 task :status do
   run "uname -a"
-  run "df -h"
-  run "free -ml"
-  run "sensors"
+  run "df -h|grep mapper"
+  run "free -ml|grep  ^[^H,^L]"
+  run "sensors|head -n4|grep ^temp"
+  run "top -b -n 1|head -n 5"
+  #run "ps aux|grep -iE 'java|ruby|rack|mongo'"
 end
