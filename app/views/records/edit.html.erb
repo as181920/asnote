@@ -1,4 +1,4 @@
-<b><%= link_to @note_name, note_records_path(@note_id) %>: edit...</b>
+<b><%= link_to Sanitize.clean(@note_name), note_records_path(@note_id) %>: edit...</b>
 <br/>
 <br/>
 <%= form_tag note_record_path(@note_id, @id), method: "put" do %>
